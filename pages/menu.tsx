@@ -1,23 +1,45 @@
 import Link from 'next/link';
+import { GetStaticProps } from 'next';
+import { CategoryData } from '../types';
 
-const Menu = () => (
-  <div className="container">
-    <h3><Link href={{ pathname: '/catalog', query: { section: 'maincourses' } }}><a>Main Courses</a></Link></h3>
-    <h3><Link href={{ pathname: '/catalog', query: { section: 'desserts' } }}><a>Desserts</a></Link></h3>
-    <h3><Link href={{ pathname: '/catalog', query: { section: 'drinks' } }}><a>Drinks</a></Link></h3>
+interface IProps {
+  categories: CategoryData[];
+}
 
-    <style jsx>{`
-      .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
+const Menu = ({ categories }: IProps) => {
 
-      h3 {
-        font-size: 10rem;
-      }
-    `}</style>
-  </div>
-);
+  return (
+    <div className="container">
+
+      {categories.map((category: CategoryData, i: number) => (
+        <h3 key={i}><Link href={{ pathname: '/catalog', query: { id: category.id, name: category.name } }}><a>{category.name}</a></Link></h3>
+      ))}
+
+      <style jsx>{`
+        .container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        h3 {
+          font-size: 10rem;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const res = await fetch('http://localhost:1337/categories');
+  const categories = await res.json();
+  return {
+    props: {
+      categories
+    }
+  }
+}
+
 
 export default Menu;

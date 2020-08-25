@@ -2,8 +2,14 @@ import { useRouter } from 'next/router';
 import LanguageSelect from '../components/Language';
 import Item from '../components/Item';
 import Link from 'next/link';
+import { GetServerSideProps } from 'next';
+import { ItemData } from '../types';
 
-const Catalog = () => {
+interface IProps {
+  items: ItemData[];
+}
+
+const Catalog = ({ items }: IProps) => {
 
   const router = useRouter();
 
@@ -11,13 +17,11 @@ const Catalog = () => {
     <div>
       <LanguageSelect />
       <Link href="/menu"><a className="menu-btn">The menu</a></Link>
-      <h3 className="catalog-title">This is the catalog for {router.query.section}</h3>
+      <h3 className="catalog-title">This is the catalog for {router.query.name}</h3>
       <div className="items-container">
-        <Item title="Fish" price={6.5} />
-        <Item title="Chips" price={2.5} />
-        <Item title="Hummus" price={3.5} />
-        <Item title="Fruit" price={8.5} />
-        <Item title="Meat" price={1.5} />
+        {items.map((item: ItemData, i: number) => (
+          <Item key={i} title={item.title} price={item.price} />
+        ))}
       </div>
 
       <style jsx>{`
@@ -48,5 +52,17 @@ const Catalog = () => {
   );
 
 };
+
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const res = await fetch(`http://localhost:1337/items?category.id=${context.query.id}`);
+  const items: ItemData[] = await res.json();
+  return {
+    props: {
+      items
+    }
+  }
+}
+
 
 export default Catalog;
