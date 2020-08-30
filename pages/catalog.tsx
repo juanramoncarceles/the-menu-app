@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import LanguageSelect from '../components/Language';
 import Item from '../components/Item';
+import Cart from '../components/Cart';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
 import { ItemData } from '../types';
@@ -20,9 +21,10 @@ const Catalog = ({ items }: IProps) => {
       <h3 className="catalog-title">This is the catalog for {router.query.name}</h3>
       <div className="items-container">
         {items.map((item: ItemData, i: number) => (
-          <Item key={i} title={item.title} price={item.price} />
+          <Item key={i} id={item.id} title={item.title} price={item.price} />
         ))}
       </div>
+      <Cart />
 
       <style jsx>{`
         .menu-btn {
