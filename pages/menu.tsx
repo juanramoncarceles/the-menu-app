@@ -32,8 +32,14 @@ const Menu = ({ categories }: IProps) => {
 
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const res = await fetch('http://localhost:1337/categories');
-  const categories = await res.json();
+  let categories: CategoryData[];
+  try {
+    const res = await fetch('http://localhost:1337/categories');
+    categories = await res.json();
+  } catch (error) {
+    console.error(error);
+    categories = [{id: '0', name: 'Test'}];
+  }
   return {
     props: {
       categories
