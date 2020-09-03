@@ -1,16 +1,35 @@
 import { createContext, useReducer } from 'react';
 import type { OrderItem } from '../types';
 
-const initialState = {items: [] as OrderItem[]};
+interface IState {
+  items: OrderItem[];
+}
 
-const OrderContext = createContext<{state?: any; dispatch: React.Dispatch<{}>}>({state: initialState, dispatch: () => {}});
+const initialState: IState = {items: []};
 
-const reducer = (state: any, action: any) => {
+const StateContext = createContext<IState>(initialState);
+const DispatchContext = createContext<React.Dispatch<{}>>(() => {});
+
+const reducer = (state: IState, action: any) => {
+  const id = action.payload;
+  const itemIdx = state.items.findIndex((item: OrderItem) => item.id === id);
   switch (action.type) {
     case "add":
-      return { ...state, items: state.items.concat({id: "a", qty: "b"}) }
+      if (itemIdx === -1) { // If the item doesn't exist yet.
+        return { ...state, items: state.items.concat({id: id, qty: 1}) };
+      } else { // If the item already exists.
+        return { ...state, items: state.items.map((item: OrderItem) => item.id === id ? { ...item, qty: ++item.qty } : item) };
+      }
     case "remove":
-      return { ...state, items: state.items.slice(1) }
+      if (itemIdx === -1) {
+        return state;
+      } else {
+        if (state.items[itemIdx].qty > 1) {
+          return { ...state, items: state.items.map((item: OrderItem) => item.id === id ? { ...item, qty: --item.qty } : item) };
+        } else {
+          return { ...state, items: state.items.filter((item: OrderItem) => item.id !== id) };
+        }
+      }
     default:
       return state;
   }
@@ -19,10 +38,12 @@ const reducer = (state: any, action: any) => {
 const OrderProvider = (props: any) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    <OrderContext.Provider value={{ state, dispatch }}>
-      {props.children}
-    </OrderContext.Provider>
+    <DispatchContext.Provider value={dispatch}>
+      <StateContext.Provider value={state}>
+        {props.children}
+      </StateContext.Provider>
+    </DispatchContext.Provider>
   );
 }
 
-export { OrderContext, OrderProvider };
+export { StateContext, DispatchContext, OrderProvider };

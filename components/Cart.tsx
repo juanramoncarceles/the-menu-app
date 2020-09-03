@@ -1,18 +1,19 @@
 import { useContext } from 'react';
-import { OrderContext } from './CartContext';
+import { StateContext } from './CartContext';
 import type { OrderItem } from '../types';
 
 const Cart = () => {
-  const { state } = useContext(OrderContext);
+  const { items } = useContext(StateContext);
 
   return (
     <div className="root">
       <p>This is the cart</p>
-      <p>Total: {state.items.length}</p>
+      <p>Total of items: {items.length}</p>
+      <p>Total price: {}</p>
       <p>Items selected</p>
       <ul>
-        {state.items.map((item: OrderItem) => (
-          <li>{item.id}</li>
+        {items.map((item: OrderItem, i: number) => (
+          <li key={i}>{item.id}</li>
         ))}
       </ul>
 

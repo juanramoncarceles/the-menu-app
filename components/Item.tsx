@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { OrderContext } from '../components/CartContext';
+import { DispatchContext, StateContext } from '../components/CartContext';
 
 interface IProps {
   id: string;
@@ -10,7 +10,8 @@ interface IProps {
 
 const Item = ({id, title, image = '', price}: IProps) => {
 
-  const { dispatch } = useContext(OrderContext);
+  const dispatch = useContext(DispatchContext);
+  const state = useContext(StateContext);
 
   return (
     <div className="root">
