@@ -1,6 +1,7 @@
 import { createContext, useReducer, ReactNode } from 'react';
 import type { OrderItem, ItemData } from '../types';
 import { ActionTypes } from '../types/enums';
+import { mergeArraysOfObjects } from '../shared/utils';
 
 interface IState {
   items: OrderItem[];
@@ -48,7 +49,7 @@ const reducer = (state: IState, action: Action) => {
         }      
     }
   } else if (action.type === ActionTypes.Store) {
-    return { ...state, itemsData: [...action.payload] }; // TODO add to existing elements in the array, this removes the previous array
+    return { ...state, itemsData: mergeArraysOfObjects(state.itemsData, action.payload) };
   } else {
     return state;
   }
