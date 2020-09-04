@@ -12,5 +12,6 @@ export interface CategoryData {
 
 export interface OrderItem {
   id: string,
+  data: ItemData,
   qty: number
 }

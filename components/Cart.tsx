@@ -8,8 +8,8 @@ const Cart = () => {
   return (
     <div className="root">
       <p>This is the cart</p>
-      <p>Total of items: {items.length}</p>
-      <p>Total price: {}</p>
+      <p>Total of items: { items.length }</p>
+      <p>Total price: { items.reduce((acc: number, current: OrderItem) => acc + (current.data.price * current.qty), 0) }</p>
       <p>Items selected</p>
       <ul>
         {items.map((item: OrderItem, i: number) => (

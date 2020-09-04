@@ -1,9 +1,11 @@
+import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import LanguageSelect from '../components/Language';
 import Item from '../components/Item';
 import Cart from '../components/Cart';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
+import { DispatchContext } from '../components/CartContext';
 import { ItemData } from '../types';
 
 interface IProps {
@@ -13,6 +15,12 @@ interface IProps {
 const Catalog = ({ items }: IProps) => {
 
   const router = useRouter();
+
+  const dispatch = useContext(DispatchContext);
+
+  useEffect(() => {
+    dispatch({type: "STORE_ITEMS_DATA", payload: items});
+  });
 
   return (
     <div>
