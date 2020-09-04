@@ -5,7 +5,7 @@ import Item from '../components/Item';
 import Cart from '../components/Cart';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
-import { DispatchContext } from '../components/CartContext';
+import { DispatchContext } from '../components/AppContext';
 import type { ItemData } from '../types';
 import { ActionTypes } from '../types/enums';
 

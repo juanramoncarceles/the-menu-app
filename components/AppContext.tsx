@@ -59,7 +59,7 @@ interface IProps {
   children: ReactNode;
 }
 
-const OrderProvider = (props: IProps) => {
+const AppContextProvider = (props: IProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <DispatchContext.Provider value={dispatch}>
@@ -70,4 +70,4 @@ const OrderProvider = (props: IProps) => {
   );
 }
 
-export { StateContext, DispatchContext, OrderProvider };
+export { StateContext, DispatchContext, AppContextProvider };
