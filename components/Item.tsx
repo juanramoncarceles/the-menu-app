@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { DispatchContext, StateContext } from '../components/CartContext';
+import { ActionTypes } from '../types/enums';
 
 interface IProps {
   id: string;
@@ -19,8 +20,8 @@ const Item = ({id, title, image = '', price}: IProps) => {
       <h4>{title}</h4>
       <p>{price}</p>
       <p>{id}</p>
-      <button onClick={() => dispatch({ type: 'add', payload: id })}>Add</button>
-      <button onClick={() => dispatch({ type: 'remove', payload: id })}>Remove</button>
+      <button onClick={() => dispatch({ type: ActionTypes.Add, payload: id })}>Add</button>
+      <button onClick={() => dispatch({ type: ActionTypes.Remove, payload: id })}>Remove</button>
       <style jsx>{`
         .root {
           height: 200px;

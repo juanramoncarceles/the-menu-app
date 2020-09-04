@@ -6,7 +6,8 @@ import Cart from '../components/Cart';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
 import { DispatchContext } from '../components/CartContext';
-import { ItemData } from '../types';
+import type { ItemData } from '../types';
+import { ActionTypes } from '../types/enums';
 
 interface IProps {
   items: ItemData[];
@@ -19,7 +20,7 @@ const Catalog = ({ items }: IProps) => {
   const dispatch = useContext(DispatchContext);
 
   useEffect(() => {
-    dispatch({type: "STORE_ITEMS_DATA", payload: items});
+    dispatch({type: ActionTypes.Store, payload: items});
   });
 
   return (
