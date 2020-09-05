@@ -1,15 +1,15 @@
 import '../styles/globals.css';
 import type { AppProps /*, AppContext */ } from 'next/app';
-import Layout from '../components/Layout';
-import { AppContextProvider } from '../components/AppContext';
+import MainLayout from '../components/layouts/MainLayout';
+import { AppContextProvider } from '../contexts/AppContext';
 
 const TheMenuApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <AppContextProvider>
-      <Layout>
+      <MainLayout>
         <Component {...pageProps} />
-      </Layout>
+      </MainLayout>
     </AppContextProvider>
   );
 }

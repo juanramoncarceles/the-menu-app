@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { DispatchContext, StateContext } from './AppContext';
+import { DispatchContext, StateContext } from '../contexts/AppContext';
 import { ActionTypes } from '../types/enums';
 
 interface IProps {

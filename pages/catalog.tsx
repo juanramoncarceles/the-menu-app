@@ -1,13 +1,12 @@
 import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import LanguageSelect from '../components/Language';
 import Item from '../components/Item';
-import Cart from '../components/Cart';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
-import { DispatchContext } from '../components/AppContext';
+import { DispatchContext } from '../contexts/AppContext';
 import type { ItemData } from '../types';
 import { ActionTypes } from '../types/enums';
+import LayoutWithCart from '../components/layouts/LayoutWithCart';
 
 interface IProps {
   items: ItemData[];
@@ -24,8 +23,7 @@ const Catalog = ({ items }: IProps) => {
   });
 
   return (
-    <div>
-      <LanguageSelect />
+    <LayoutWithCart>
       <Link href="/menu"><a className="menu-btn">The menu</a></Link>
       <h3 className="catalog-title">This is the catalog for {router.query.name}</h3>
       <div className="items-container">
@@ -33,7 +31,6 @@ const Catalog = ({ items }: IProps) => {
           <Item key={i} id={item.id} title={item.title} price={item.price} />
         ))}
       </div>
-      <Cart />
 
       <style jsx>{`
         .menu-btn {
@@ -59,7 +56,7 @@ const Catalog = ({ items }: IProps) => {
           gap: 20px;
         }
       `}</style>
-    </div>
+    </LayoutWithCart>
   );
 
 };

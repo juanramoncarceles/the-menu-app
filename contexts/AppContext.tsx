@@ -59,12 +59,12 @@ interface IProps {
   children: ReactNode;
 }
 
-const AppContextProvider = (props: IProps) => {
+const AppContextProvider = ({children}: IProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <DispatchContext.Provider value={dispatch}>
       <StateContext.Provider value={state}>
-        {props.children}
+        {children}
       </StateContext.Provider>
     </DispatchContext.Provider>
   );

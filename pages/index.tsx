@@ -1,13 +1,8 @@
-import Head from 'next/head';
 import Link from 'next/link';
 
-export default function Home() {
+const Home = () => {
   return (
     <div>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <main>
         <h1>Welcome to the restaurant</h1>
         <Link href="/menu"><a>Go to the menu</a></Link>
@@ -16,3 +11,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;
