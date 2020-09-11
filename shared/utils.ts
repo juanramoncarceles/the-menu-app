@@ -13,3 +13,12 @@ export function mergeArraysOfObjects<T extends BaseObject>(arr1: Array<T>, arr2:
   })
   return finalArr;
 }
+
+/**
+ * Creates a function that formats the price based on some options.
+ */
+export function formatPriceFactory(decimals: number, currencySymbol: string) {
+  return function(priceNum: number) {
+    return `${priceNum.toFixed(decimals)} ${currencySymbol}`;
+  }
+}

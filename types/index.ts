@@ -16,3 +16,8 @@ export interface OrderItem extends BaseObject {
   data: ItemData,
   qty: number
 }
+
+export interface AppSettings {
+  currencySymbol: string;
+  priceAmountDecimals: number;
+}

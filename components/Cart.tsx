@@ -3,13 +3,16 @@ import { StateContext } from '../contexts/AppContext';
 import type { OrderItem } from '../types';
 
 const Cart = () => {
-  const { items } = useContext(StateContext);
+
+  const { items, formatPrice } = useContext(StateContext);
+
+  const totalPrice = items.reduce((acc: number, current: OrderItem) => acc + (current.data.price * current.qty), 0);
 
   return (
     <div className="root">
       <p>This is the cart</p>
       <p>Total of items: { items.length }</p>
-      <p>Total price: { items.reduce((acc: number, current: OrderItem) => acc + (current.data.price * current.qty), 0) }</p>
+      <p>Total price: { formatPrice(totalPrice) }</p>
       <p>Items selected</p>
       <ul>
         {items.map((item: OrderItem, i: number) => (

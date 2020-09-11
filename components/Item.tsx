@@ -12,13 +12,13 @@ interface IProps {
 const Item = ({id, title, image = '', price}: IProps) => {
 
   const dispatch = useContext(DispatchContext);
-  const state = useContext(StateContext);
+  const { formatPrice } = useContext(StateContext);
 
   return (
     <div className="root">
       <img src={image} />
       <h4>{title}</h4>
-      <p>{price}</p>
+      <p>{formatPrice(price)}</p>
       <p>{id}</p>
       <button onClick={() => dispatch({ type: ActionTypes.Add, payload: id })}>Add</button>
       <button onClick={() => dispatch({ type: ActionTypes.Remove, payload: id })}>Remove</button>

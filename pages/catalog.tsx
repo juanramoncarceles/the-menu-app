@@ -4,22 +4,23 @@ import Item from '../components/Item';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
 import { DispatchContext } from '../contexts/AppContext';
-import type { ItemData } from '../types';
+import type { ItemData, AppSettings } from '../types';
 import { ActionTypes } from '../types/enums';
 import LayoutWithCart from '../components/layouts/LayoutWithCart';
 
 interface IProps {
   items: ItemData[];
+  settings: AppSettings;
 }
 
-const Catalog = ({ items }: IProps) => {
+const Catalog = ({ items, settings }: IProps) => {
 
   const router = useRouter();
 
   const dispatch = useContext(DispatchContext);
 
   useEffect(() => {
-    dispatch({type: ActionTypes.Store, payload: items});
+    dispatch({type: ActionTypes.Store, payload: [items, settings]});
   });
 
   return (
@@ -63,11 +64,27 @@ const Catalog = ({ items }: IProps) => {
 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch(`http://localhost:1337/items?category.id=${context.query.id}`);
-  const items: ItemData[] = await res.json();
+
+  let items: ItemData[];
+  let settings: AppSettings;
+
+  try {
+    const res = await Promise.all([
+      fetch(`http://localhost:1337/items?category.id=${context.query.id}`),
+      fetch('http://localhost:1337/settings')
+    ]);
+    [items, settings] = await Promise.all(res.map(r => r.json()));
+  } catch (error) {
+    console.log("An error has happened fetching the data.");
+    // Setting default values.
+    items = [];
+    settings = {currencySymbol: '', priceAmountDecimals: 3};
+  }
+
   return {
     props: {
-      items
+      items,
+      settings,
     }
   }
 }

@@ -1,11 +1,13 @@
-import { createContext, useReducer, ReactNode } from 'react';
-import type { OrderItem, ItemData } from '../types';
+import { createContext, useReducer, ReactNode, useEffect, useContext } from 'react';
+import type { OrderItem, ItemData, AppSettings } from '../types';
 import { ActionTypes } from '../types/enums';
-import { mergeArraysOfObjects } from '../shared/utils';
+import { mergeArraysOfObjects, formatPriceFactory } from '../shared/utils';
 
 interface IState {
   items: OrderItem[];
   itemsData: ItemData[]; // Represents all the fetched data. In other words all the data of the items.
+  settings: AppSettings;
+  formatPrice: (n: number) => string;
 }
 
 type Action = {
@@ -13,10 +15,13 @@ type Action = {
   payload: string;
 } | {
   type: ActionTypes.Store;
-  payload: ItemData[];
+  payload: [ItemData[], AppSettings];
+} | {
+  type: ActionTypes.Factory;
+  payload: (n: number) => string;
 }
 
-const initialState: IState = {items: [], itemsData: []};
+const initialState: IState = {items: [], itemsData: [], settings: {currencySymbol: '', priceAmountDecimals: 3}, formatPrice: f => f.toString()};
 
 const StateContext = createContext<IState>(initialState);
 const DispatchContext = createContext<React.Dispatch<Action>>(() => {});
@@ -49,7 +54,10 @@ const reducer = (state: IState, action: Action) => {
         }      
     }
   } else if (action.type === ActionTypes.Store) {
-    return { ...state, itemsData: mergeArraysOfObjects(state.itemsData, action.payload) };
+    const [newItemsData, settings] = action.payload;
+    return { ...state, itemsData: mergeArraysOfObjects(state.itemsData, newItemsData), settings };
+  } else if (action.type === ActionTypes.Factory) {
+    return { ...state, formatPrice: action.payload }
   } else {
     return state;
   }
@@ -60,7 +68,14 @@ interface IProps {
 }
 
 const AppContextProvider = ({children}: IProps) => {
+
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    console.log("Running format price factory.");
+    dispatch({type: ActionTypes.Factory, payload: formatPriceFactory(state.settings.priceAmountDecimals, state.settings.currencySymbol)});
+  }, [state.settings]);
+
   return (
     <DispatchContext.Provider value={dispatch}>
       <StateContext.Provider value={state}>
