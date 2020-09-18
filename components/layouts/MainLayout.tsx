@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
-import theme from '../../styles/theme';
 import LanguageSelect from '../Language';
+import { GlobalStyle } from '../../styles';
 
 interface IProps {
   children?: ReactNode;
@@ -13,14 +13,11 @@ const MainLayout = ({children}: IProps) => {
       <Head>
         <title>The Restaurant</title>
         <link rel="icon" href="/favicon.ico" />
+        <link href="https://fonts.googleapis.com/css2?family=Bellota+Text&family=Bellota:wght@700&display=swap" rel="stylesheet"></link>
       </Head>
       <LanguageSelect />
       {children}
-      <style jsx global>{`
-        :root {
-          color: ${theme.colors.dark};
-        }
-      `}</style>
+      <GlobalStyle />
     </div>
   )
 }
