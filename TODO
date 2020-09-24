@@ -1,3 +1,4 @@
 BUGS:
   ☐ Cart total items should be the total amount of items, not the total types of items. @low
   ☐ In the catalog.tsx set a default path to a placeholder image in case an item image is missing.
+    The image should be stored in the public folder and referenced from there.
