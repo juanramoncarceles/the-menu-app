@@ -1,17 +1,15 @@
-import '../styles/globals.css';
-import type { AppProps /*, AppContext */ } from 'next/app';
-import MainLayout from '../components/layouts/MainLayout';
-import { ThemeProvider } from 'styled-components';
-import { AppContextProvider } from '../contexts/AppContext';
+import type { AppProps /*, AppContext */ } from "next/app";
+import MainLayout from "../components/layouts/MainLayout";
+import { ThemeProvider } from "styled-components";
+import { AppContextProvider } from "../contexts/AppContext";
+import { primary, typeScale } from "../styles";
 
 const theme = {
-  colors: {
-    primary: 'pink',
-  }
-}
+  primary,
+  typeScale,
+};
 
 const TheMenuApp = ({ Component, pageProps }: AppProps) => {
-
   return (
     <AppContextProvider>
       <ThemeProvider theme={theme}>
@@ -21,6 +19,6 @@ const TheMenuApp = ({ Component, pageProps }: AppProps) => {
       </ThemeProvider>
     </AppContextProvider>
   );
-}
+};
 
 export default TheMenuApp;

@@ -1,8 +1,8 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { DispatchContext, StateContext } from "../contexts/AppContext";
 import { ActionTypes } from "../types/enums";
-import { PrimaryButton } from "./Buttons";
+import { IconButton } from "./Buttons";
 
 interface IProps {
   id: string;
@@ -14,10 +14,31 @@ interface IProps {
 
 const radius = 25;
 
-const Root = styled.div`
+const activeBorderOffset = 6;
+
+interface RootProps {
+  active: boolean;
+}
+
+const Root = styled.div<RootProps>`
   display: flex;
   flex-direction: column;
-  min-width: 200px;
+  position: relative;
+  border-radius: ${radius}px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: calc(100% + ${2 * activeBorderOffset}px);
+    height: calc(100% + ${2 * activeBorderOffset}px);
+    border-radius: ${radius + activeBorderOffset}px;
+    border: 3px solid ${({ theme }) => theme.primary[100]};
+    z-index: -1;
+    left: -${activeBorderOffset}px;
+    top: -${activeBorderOffset}px;
+    visibility: ${({ active }) => (active ? "visible" : "hidden")};
+  }
 `;
 
 const Img = styled.img`
@@ -30,15 +51,16 @@ const Info = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-grow: 1;
   padding: 1rem;
-  min-height: 180px;
+  text-align: center;
   border-radius: ${radius}px;
-  background-color: #9b9b9b;
+  background-color: #fff;
 `;
 
 const ItemTitle = styled.h4`
-  margin: 0;
-  color: ${({ theme }) => theme.colors.primary};
+  margin-bottom: 0.8rem;
+  font-size: ${({ theme }) => theme.typeScale.header5};
 `;
 
 const Description = styled.p`
@@ -48,40 +70,54 @@ const Description = styled.p`
 const PriceAndAmount = styled.div`
   width: 100%;
   display: flex;
+  margin-top: 0.8rem;
   justify-content: space-between;
+  align-items: center;
+`;
+
+const Price = styled.span`
+  font-size: ${({ theme }) => theme.typeScale.header5};
 `;
 
 const Amount = styled.span`
+  display: inline-block;
+  width: 1.5rem;
   margin-right: 10px;
   margin-left: 10px;
+  font-size: ${({ theme }) => theme.typeScale.header5};
 `;
 
 const Item = ({ id, title, imageurl, price, description }: IProps) => {
+  const [amount, setAmount] = useState(0);
   const dispatch = useContext(DispatchContext);
   const { formatPrice } = useContext(StateContext);
 
   return (
-    <Root data-id={id}>
+    <Root data-id={id} active={amount > 0}>
       <Img src={process.env.backendServer + imageurl} />
       <Info>
         <ItemTitle>{title}</ItemTitle>
         <Description>{description}</Description>
         <PriceAndAmount>
-          <span>{formatPrice(price)}</span>
+          <Price>{formatPrice(price)}</Price>
           <span>
-            <PrimaryButton
-              onClick={() =>
-                dispatch({ type: ActionTypes.Remove, payload: id })
-              }
+            <IconButton
+              onClick={() => {
+                dispatch({ type: ActionTypes.Remove, payload: id });
+                setAmount(amount < 1 ? 0 : amount - 1);
+              }}
             >
-              Remove
-            </PrimaryButton>
-            <Amount>4</Amount>
-            <PrimaryButton
-              onClick={() => dispatch({ type: ActionTypes.Add, payload: id })}
+              -
+            </IconButton>
+            <Amount>{amount}</Amount>
+            <IconButton
+              onClick={() => {
+                dispatch({ type: ActionTypes.Add, payload: id });
+                setAmount(amount + 1);
+              }}
             >
-              Add
-            </PrimaryButton>
+              +
+            </IconButton>
           </span>
         </PriceAndAmount>
       </Info>
