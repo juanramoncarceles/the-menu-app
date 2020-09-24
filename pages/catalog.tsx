@@ -76,8 +76,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   try {
     const res = await Promise.all([
-      fetch(`http://localhost:1337/items?category.id=${context.query.id}`),
-      fetch("http://localhost:1337/settings"),
+      fetch(
+        `${process.env.backendServer}/items?category.id=${context.query.id}`
+      ),
+      fetch(`${process.env.backendServer}/settings`),
     ]);
     [items, settings] = await Promise.all(res.map((r) => r.json()));
   } catch (error) {
