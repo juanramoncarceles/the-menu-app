@@ -31,8 +31,7 @@ const ItemsContainer = styled.div`
   display: grid;
   justify-content: center;
   align-content: center;
-  grid-template-columns: repeat(auto-fit, 200px);
-  grid-template-rows: repeat(auto-fit, 200px);
+  grid-template-columns: repeat(auto-fit, 250px);
   grid-gap: 20px;
   gap: 20px;
 `;
