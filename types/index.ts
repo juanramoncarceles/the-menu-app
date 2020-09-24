@@ -6,6 +6,7 @@ export interface ItemData extends BaseObject {
   title: string;
   price: number;
   description: string;
+  image: { url: string };
 }
 
 export interface CategoryData extends BaseObject {
@@ -13,8 +14,8 @@ export interface CategoryData extends BaseObject {
 }
 
 export interface OrderItem extends BaseObject {
-  data: ItemData,
-  qty: number
+  data: ItemData;
+  qty: number;
 }
 
 export interface AppSettings {
