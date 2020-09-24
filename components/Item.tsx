@@ -18,7 +18,6 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 200px;
-  margin: 15px;
 `;
 
 const Img = styled.img`
