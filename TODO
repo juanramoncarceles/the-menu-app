@@ -1,13 +1,15 @@
 BUGS:
   ☐ Cart total items should be the total amount of items, not the total types of items. @low
-  ☐ In the catalog.tsx set a default path to a placeholder image in case an item image is missing.
-    The image should be stored in the public folder and referenced from there.
   ☐ Remove the focus outline of Chrome on buttons.
   ☐ Import SVGs as React components with babel-plugin-inline-react-svg
     https://medium.com/anna-coding/how-to-import-svg-in-next-js-with-typescript-88ebff26ce17
     https://medium.com/wesionary-team/rendering-svg-image-in-next-js-with-next-image-and-babel-plugin-inline-react-svg-fc7fae588ac3
+  ☐ Add margin bottom on the items container to avoid last items to remain behaind the cart component at the bottom of the viewport.
+  ☐ Make the food item svg image placeholder be inline? @low 
 
 
 DONE:
   ✔ Only if item amount is bigger than 0 show the border. @done(20-09-24 23:23)
   ✔ Item amount cannot be less than 0. @done(20-09-24 23:16)
+  ✔ In the catalog.tsx set a default path to a placeholder image in case an item image is missing. @done(20-09-27 17:35)
+    The image should be stored in the public folder and referenced from there.
