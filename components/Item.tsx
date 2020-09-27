@@ -102,7 +102,13 @@ const Item = ({
 
   return (
     <Root data-id={id} active={amount > 0}>
-      <Img src={process.env.backendServer + imageurl} />
+      <Img
+        src={
+          imageurl
+            ? process.env.backendServer + imageurl
+            : "/food_img_placeholder.svg"
+        }
+      />
       <Info>
         <ItemTitle>{title}</ItemTitle>
         <Description>{description}</Description>
