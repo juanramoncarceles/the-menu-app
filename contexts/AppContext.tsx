@@ -10,7 +10,7 @@ import { ActionTypes } from "../types/enums";
 import { mergeArraysOfObjects, formatPriceFactory } from "../shared/utils";
 
 interface IState {
-  items: OrderItem[];
+  orderItems: OrderItem[];
   itemsData: ItemData[]; // Represents all the fetched data. In other words all the data of the items.
   settings: AppSettings;
   formatPrice: (n: number) => string;
@@ -31,7 +31,7 @@ type Action =
     };
 
 const initialState: IState = {
-  items: [],
+  orderItems: [],
   itemsData: [],
   settings: { currencySymbol: "", priceAmountDecimals: 3 },
   formatPrice: (f) => f.toString(),
@@ -43,7 +43,9 @@ const DispatchContext = createContext<React.Dispatch<Action>>(() => {});
 const reducer = (state: IState, action: Action) => {
   if (action.type === ActionTypes.Add || action.type === ActionTypes.Remove) {
     const id = action.payload;
-    const itemIdx = state.items.findIndex((item: OrderItem) => item.id === id);
+    const itemIdx = state.orderItems.findIndex(
+      (item: OrderItem) => item.id === id
+    );
     switch (action.type) {
       case ActionTypes.Add:
         if (itemIdx === -1) {
@@ -52,7 +54,11 @@ const reducer = (state: IState, action: Action) => {
           if (itemData !== undefined) {
             return {
               ...state,
-              items: state.items.concat({ id: id, data: itemData, qty: 1 }),
+              orderItems: state.orderItems.concat({
+                id: id,
+                data: itemData,
+                qty: 1,
+              }),
             };
           } else {
             return state;
@@ -61,7 +67,7 @@ const reducer = (state: IState, action: Action) => {
           // If the item already exists.
           return {
             ...state,
-            items: state.items.map((item: OrderItem) =>
+            orderItems: state.orderItems.map((item: OrderItem) =>
               item.id === id ? { ...item, qty: ++item.qty } : item
             ),
           };
@@ -70,17 +76,19 @@ const reducer = (state: IState, action: Action) => {
         if (itemIdx === -1) {
           return state;
         } else {
-          if (state.items[itemIdx].qty > 1) {
+          if (state.orderItems[itemIdx].qty > 1) {
             return {
               ...state,
-              items: state.items.map((item: OrderItem) =>
+              orderItems: state.orderItems.map((item: OrderItem) =>
                 item.id === id ? { ...item, qty: --item.qty } : item
               ),
             };
           } else {
             return {
               ...state,
-              items: state.items.filter((item: OrderItem) => item.id !== id),
+              orderItems: state.orderItems.filter(
+                (item: OrderItem) => item.id !== id
+              ),
             };
           }
         }

@@ -13,9 +13,9 @@ const Root = styled.div`
 `;
 
 const Cart = () => {
-  const { items, formatPrice } = useContext(StateContext);
+  const { orderItems, formatPrice } = useContext(StateContext);
 
-  const totalPrice = items.reduce(
+  const totalPrice = orderItems.reduce(
     (acc: number, current: OrderItem) => acc + current.data.price * current.qty,
     0
   );
@@ -23,11 +23,11 @@ const Cart = () => {
   return (
     <Root>
       <p>This is the cart</p>
-      <p>Total of items: {items.length}</p>
+      <p>Total of items: {orderItems.length}</p>
       <p>Total price: {formatPrice(totalPrice)}</p>
       <p>Items selected</p>
       <ul>
-        {items.map((item: OrderItem, i: number) => (
+        {orderItems.map((item: OrderItem, i: number) => (
           <li key={i}>{item.id}</li>
         ))}
       </ul>

@@ -10,6 +10,7 @@ interface IProps {
   imageurl: string;
   price: number;
   description: string;
+  amount: number;
 }
 
 const radius = 25;
@@ -87,8 +88,15 @@ const Amount = styled.span`
   font-size: ${({ theme }) => theme.typeScale.header5};
 `;
 
-const Item = ({ id, title, imageurl, price, description }: IProps) => {
-  const [amount, setAmount] = useState(0);
+const Item = ({
+  id,
+  title,
+  imageurl,
+  price,
+  description,
+  amount: initialAmount,
+}: IProps) => {
+  const [amount, setAmount] = useState(initialAmount);
   const dispatch = useContext(DispatchContext);
   const { formatPrice } = useContext(StateContext);
 

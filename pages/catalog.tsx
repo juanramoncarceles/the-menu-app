@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Item from "../components/Item";
 import Link from "next/link";
 import { GetServerSideProps } from "next";
-import { DispatchContext } from "../contexts/AppContext";
+import { DispatchContext, StateContext } from "../contexts/AppContext";
 import type { ItemData, AppSettings } from "../types";
 import styled from "styled-components";
 import { ActionTypes } from "../types/enums";
@@ -40,10 +40,11 @@ const Catalog = ({ items, settings }: IProps) => {
   const router = useRouter();
 
   const dispatch = useContext(DispatchContext);
+  const { orderItems } = useContext(StateContext);
 
   useEffect(() => {
     dispatch({ type: ActionTypes.Store, payload: [items, settings] });
-  });
+  }, [items]);
 
   return (
     <LayoutWithCart>
@@ -54,16 +55,22 @@ const Catalog = ({ items, settings }: IProps) => {
       </BackLink>
       <CatalogTitle>This is the catalog for {router.query.name}</CatalogTitle>
       <ItemsContainer>
-        {items.map((item: ItemData, i: number) => (
-          <Item
-            key={i}
-            id={item.id}
-            title={item.title}
-            price={item.price}
-            description={item.description}
-            imageurl={item.image ? item.image.url : ""}
-          />
-        ))}
+        {items.map((item: ItemData, i: number) => {
+          const itemInOrder = orderItems.find(
+            (orderItem) => orderItem.id === item.id
+          );
+          return (
+            <Item
+              key={i}
+              id={item.id}
+              title={item.title}
+              price={item.price}
+              description={item.description}
+              imageurl={item.image ? item.image.url : ""}
+              amount={itemInOrder ? itemInOrder.qty : 0}
+            />
+          );
+        })}
       </ItemsContainer>
     </LayoutWithCart>
   );
