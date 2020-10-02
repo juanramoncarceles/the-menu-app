@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { StateContext } from "../contexts/AppContext";
-import type { OrderItem } from "../types";
+import type { OrderItem, CategoryData } from "../types";
 import styled from "styled-components";
 
 const dockedHeight = 60;
@@ -136,6 +136,73 @@ const Cart = () => {
     0
   );
 
+  /**
+   * Creates the JSX for the title of a section in the cart order.
+   * If no sectionId is provided the sectionTitle is used as key.
+   */
+  const createOrderSectionJSX = (sectionTitle: string, sectionId?: string) => {
+    return (
+      <tr key={sectionId ? sectionId : sectionTitle}>
+        <OrderSection colSpan={3} scope="colgroup">
+          {sectionTitle}
+        </OrderSection>
+      </tr>
+    );
+  };
+
+  /**
+   * Creates the JSX for an item in the cart order.
+   */
+  const createOrderItemJSX = (item: OrderItem) => {
+    return (
+      <tr key={item.id}>
+        <OrderItemName scope="row">{item.data.title}</OrderItemName>
+        <td>&times; {item.qty}</td>
+        <OrderItemPrice>
+          {formatPrice(item.data.price * item.qty)}
+        </OrderItemPrice>
+      </tr>
+    );
+  };
+
+  const tempCategories = [
+    { id: "5f3e5cc7925c9f0311e17eb7", name: "Main Course" },
+    { id: "5f3e5cd0925c9f0311e17eb8", name: "Dessert" },
+    { id: "5f3e5cd9925c9f0311e17eb9", name: "Starter" },
+    { id: "5f3e5ce3925c9f0311e17eba", name: "Drinks" },
+  ];
+
+  /**
+   * Creates the JSX for the body of the order table.
+   * If the items are organized by categories an array of their categories should be provided.
+   */
+  const createOrderTableJSX = (
+    orderItems: OrderItem[],
+    categories: CategoryData[]
+  ) => {
+    const orderContents: { [key: string]: OrderItem[] } = {};
+    orderItems.forEach((item) => {
+      if (orderContents.hasOwnProperty(item.data.category.id)) {
+        orderContents[item.data.category.id].push(item);
+      } else {
+        orderContents[item.data.category.id] = [item];
+      }
+    });
+    const orderJSX = [];
+    for (const [sectionId, items] of Object.entries(orderContents)) {
+      const categoryData = categories.find(
+        (category) => category.id === sectionId
+      );
+      orderJSX.push(
+        categoryData
+          ? createOrderSectionJSX(categoryData.name, categoryData.id)
+          : "",
+        ...items.map((item) => createOrderItemJSX(item))
+      );
+    }
+    return orderJSX;
+  };
+
   return (
     <Root open={isOpen}>
       <FullView open={isOpen}>
@@ -150,48 +217,7 @@ const Cart = () => {
                 <th scope="col">Price</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <OrderSection colSpan={3} scope="colgroup">
-                  Main courses
-                </OrderSection>
-              </tr>
-              <tr>
-                <OrderItemName scope="row">Fish</OrderItemName>
-                <td>x 1</td>
-                <OrderItemPrice>8,40€</OrderItemPrice>
-              </tr>
-              <tr>
-                <OrderItemName scope="row">Pizza</OrderItemName>
-                <td>x 1</td>
-                <OrderItemPrice>6,70€</OrderItemPrice>
-              </tr>
-              <tr>
-                <OrderSection colSpan={3} scope="colgroup">
-                  Snacks
-                </OrderSection>
-              </tr>
-              <tr>
-                <OrderItemName scope="row">Chips</OrderItemName>
-                <td>x 1</td>
-                <OrderItemPrice>3,50€</OrderItemPrice>
-              </tr>
-              <tr>
-                <OrderSection colSpan={3} scope="colgroup">
-                  Drinks
-                </OrderSection>
-              </tr>
-              <tr>
-                <OrderItemName scope="row">Coke</OrderItemName>
-                <td>x 2</td>
-                <OrderItemPrice>1,90€</OrderItemPrice>
-              </tr>
-              <tr>
-                <OrderItemName scope="row">Water</OrderItemName>
-                <td>x 1</td>
-                <OrderItemPrice>1,00€</OrderItemPrice>
-              </tr>
-            </tbody>
+            <tbody>{createOrderTableJSX(orderItems, tempCategories)}</tbody>
             <tfoot>
               <tr>
                 <td
@@ -201,9 +227,9 @@ const Cart = () => {
               </tr>
               <tr>
                 <th colSpan={2} scope="row" style={{ visibility: "hidden" }}>
-                  Totals
+                  Total
                 </th>
-                <OrderTotalPrice>23,40€</OrderTotalPrice>
+                <OrderTotalPrice>{formatPrice(totalPrice)}</OrderTotalPrice>
               </tr>
             </tfoot>
           </table>

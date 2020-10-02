@@ -7,6 +7,7 @@ export interface ItemData extends BaseObject {
   price: number;
   description: string;
   image: { url: string };
+  category: CategoryData;
 }
 
 export interface CategoryData extends BaseObject {
