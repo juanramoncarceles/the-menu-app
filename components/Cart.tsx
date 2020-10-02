@@ -230,7 +230,7 @@ const Cart = () => {
         </OrderContent>
       </FullView>
       <DockedView open={isOpen}>
-        <div>{orderItems.length} items</div>
+        <div>{orderItems.reduce((acc, curr) => acc + curr.qty, 0)} items</div>
         <OpenCartBtnContainer>
           <OpenCartBtn onClick={() => setIsOpen(!isOpen)}>
             View order
