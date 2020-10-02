@@ -1,6 +1,9 @@
+import { useContext, useEffect } from "react";
 import Link from "next/link";
 import { GetStaticProps } from "next";
+import { DispatchContext } from "../contexts/AppContext";
 import { CategoryData } from "../types";
+import { ActionTypes } from "../types/enums";
 import LayoutWithCart from "../components/layouts/LayoutWithCart";
 
 interface IProps {
@@ -8,6 +11,12 @@ interface IProps {
 }
 
 const Menu = ({ categories }: IProps) => {
+  const dispatch = useContext(DispatchContext);
+
+  useEffect(() => {
+    dispatch({ type: ActionTypes.StoreCategories, payload: categories });
+  }, [categories]);
+
   return (
     <LayoutWithCart>
       <div className="container">
