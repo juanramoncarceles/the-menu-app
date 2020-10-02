@@ -129,7 +129,7 @@ const OrderTotalPrice = styled.td`
 
 const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { orderItems, formatPrice } = useContext(StateContext);
+  const { orderItems, categoriesData, formatPrice } = useContext(StateContext);
 
   const totalPrice = orderItems.reduce(
     (acc: number, current: OrderItem) => acc + current.data.price * current.qty,
@@ -165,13 +165,6 @@ const Cart = () => {
     );
   };
 
-  const tempCategories = [
-    { id: "5f3e5cc7925c9f0311e17eb7", name: "Main Course" },
-    { id: "5f3e5cd0925c9f0311e17eb8", name: "Dessert" },
-    { id: "5f3e5cd9925c9f0311e17eb9", name: "Starter" },
-    { id: "5f3e5ce3925c9f0311e17eba", name: "Drinks" },
-  ];
-
   /**
    * Creates the JSX for the body of the order table.
    * If the items are organized by categories an array of their categories should be provided.
@@ -193,12 +186,12 @@ const Cart = () => {
       const categoryData = categories.find(
         (category) => category.id === sectionId
       );
-      orderJSX.push(
-        categoryData
-          ? createOrderSectionJSX(categoryData.name, categoryData.id)
-          : "",
-        ...items.map((item) => createOrderItemJSX(item))
-      );
+      if (categoryData) {
+        orderJSX.push(
+          createOrderSectionJSX(categoryData.name, categoryData.id)
+        );
+      }
+      orderJSX.push(...items.map((item) => createOrderItemJSX(item)));
     }
     return orderJSX;
   };
@@ -217,7 +210,7 @@ const Cart = () => {
                 <th scope="col">Price</th>
               </tr>
             </thead>
-            <tbody>{createOrderTableJSX(orderItems, tempCategories)}</tbody>
+            <tbody>{createOrderTableJSX(orderItems, categoriesData)}</tbody>
             <tfoot>
               <tr>
                 <td
