@@ -1,14 +1,32 @@
 BUGS:
-  ☐ Cart total items should be the total amount of items, not the total types of items. @low
+  ☐ Cart items categories should appear in a fixed order according to the menu page.
+    They could be ordered in the createOrderTableJSX() method of the Cart component.
+  ☐ Save 'settings' in AppContext also from the 'menu' page.
+    Implementation would be similar to the 'catalog' page.
+  ☐ If I access the 'catalog' page first then I have no data about categories in AppContext, so in the cart doesn't appear any category information.
+    Maybe the data from categories should be added to AppContext one by one according to the 'category' pages that are visited?
+    Thay way the required category data would be always avaialble when opening the cart. Since only the 'id' and 'name' are necessary it would work.
+  ☐ Currently if 'settings' change they are not updated because in the catalog's 'useEffect' there is no 'settings' dependency.
+    Watch them or separate in two different dispatch actions to control them better in context reducer? An action like 'StoreSettings'.
   ☐ Remove the focus outline of Chrome on buttons.
   ☐ Import SVGs as React components with babel-plugin-inline-react-svg
     https://medium.com/anna-coding/how-to-import-svg-in-next-js-with-typescript-88ebff26ce17
     https://medium.com/wesionary-team/rendering-svg-image-in-next-js-with-next-image-and-babel-plugin-inline-react-svg-fc7fae588ac3
   ☐ Add margin bottom on the items container to avoid last items to remain behaind the cart component at the bottom of the viewport.
+
+CHANGES:
+  ☐ Rename action "Store" to "StoreItems" in reducer.
   ☐ Make the food item svg image placeholder be inline? @low 
 
+FEATURES:
+  ☐ Create a mock for the fetched data from the back-end API to avoid calling it during front-end development.
+  ☐ Store order data in localStorage as well so it is persistent.
+    Maybe this is not a good idea if a new client comes? A reset button could be useful in any case.
+  ☐ Change quantities of items also from the cart component itself. Specifically form the column with the quantities.
+    Similar to the WooCommerce cart.
 
 DONE:
+  ✔ Cart total items should be the total amount of items, not the total types of items. @low @done(20-10-02 21:44)
   ✔ Only if item amount is bigger than 0 show the border. @done(20-09-24 23:23)
   ✔ Item amount cannot be less than 0. @done(20-09-24 23:16)
   ✔ In the catalog.tsx set a default path to a placeholder image in case an item image is missing. @done(20-09-27 17:35)
