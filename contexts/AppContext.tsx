@@ -5,13 +5,14 @@ import {
   useEffect,
   useContext,
 } from "react";
-import type { OrderItem, ItemData, AppSettings } from "../types";
+import type { OrderItem, ItemData, AppSettings, CategoryData } from "../types";
 import { ActionTypes } from "../types/enums";
 import { mergeArraysOfObjects, formatPriceFactory } from "../shared/utils";
 
 interface IState {
   orderItems: OrderItem[];
   itemsData: ItemData[]; // Represents all the fetched data. In other words all the data of the items.
+  categoriesData: CategoryData[];
   settings: AppSettings;
   formatPrice: (n: number) => string;
 }
@@ -26,6 +27,10 @@ type Action =
       payload: [ItemData[], AppSettings];
     }
   | {
+      type: ActionTypes.StoreCategories;
+      payload: CategoryData[];
+    }
+  | {
       type: ActionTypes.Factory;
       payload: (n: number) => string;
     };
@@ -33,6 +38,7 @@ type Action =
 const initialState: IState = {
   orderItems: [],
   itemsData: [],
+  categoriesData: [],
   settings: { currencySymbol: "", priceAmountDecimals: 3 },
   formatPrice: (f) => f.toString(),
 };
@@ -99,6 +105,11 @@ const reducer = (state: IState, action: Action) => {
       ...state,
       itemsData: mergeArraysOfObjects(state.itemsData, newItemsData),
       settings,
+    };
+  } else if (action.type === ActionTypes.StoreCategories) {
+    return {
+      ...state,
+      categoriesData: action.payload,
     };
   } else if (action.type === ActionTypes.Factory) {
     return { ...state, formatPrice: action.payload };
