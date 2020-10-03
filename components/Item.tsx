@@ -117,7 +117,7 @@ const Item = ({
           <span>
             <IconButton
               onClick={() => {
-                dispatch({ type: ActionTypes.Remove, payload: id });
+                dispatch({ type: ActionTypes.RemoveItem, payload: id });
                 setAmount(amount < 1 ? 0 : amount - 1);
               }}
             >
@@ -126,7 +126,7 @@ const Item = ({
             <Amount>{amount}</Amount>
             <IconButton
               onClick={() => {
-                dispatch({ type: ActionTypes.Add, payload: id });
+                dispatch({ type: ActionTypes.AddItem, payload: id });
                 setAmount(amount + 1);
               }}
             >

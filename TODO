@@ -15,7 +15,6 @@ BUGS:
   ☐ Add margin bottom on the items container to avoid last items to remain behaind the cart component at the bottom of the viewport.
 
 CHANGES:
-  ☐ Rename action "Store" to "StoreItems" in reducer.
   ☐ Make the food item svg image placeholder be inline? @low 
 
 FEATURES:
@@ -26,6 +25,7 @@ FEATURES:
     Similar to the WooCommerce cart.
 
 DONE:
+  ✔ Rename action "Store" to "StoreItems" in reducer. @done(20-10-03 16:18)
   ✔ Cart total items should be the total amount of items, not the total types of items. @low @done(20-10-02 21:44)
   ✔ Only if item amount is bigger than 0 show the border. @done(20-09-24 23:23)
   ✔ Item amount cannot be less than 0. @done(20-09-24 23:16)

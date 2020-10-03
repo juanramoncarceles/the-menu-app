@@ -19,11 +19,11 @@ interface IState {
 
 type Action =
   | {
-      type: ActionTypes.Add | ActionTypes.Remove;
+      type: ActionTypes.AddItem | ActionTypes.RemoveItem;
       payload: string;
     }
   | {
-      type: ActionTypes.Store;
+      type: ActionTypes.StoreItems;
       payload: [ItemData[], AppSettings];
     }
   | {
@@ -47,13 +47,16 @@ const StateContext = createContext<IState>(initialState);
 const DispatchContext = createContext<React.Dispatch<Action>>(() => {});
 
 const reducer = (state: IState, action: Action) => {
-  if (action.type === ActionTypes.Add || action.type === ActionTypes.Remove) {
+  if (
+    action.type === ActionTypes.AddItem ||
+    action.type === ActionTypes.RemoveItem
+  ) {
     const id = action.payload;
     const itemIdx = state.orderItems.findIndex(
       (item: OrderItem) => item.id === id
     );
     switch (action.type) {
-      case ActionTypes.Add:
+      case ActionTypes.AddItem:
         if (itemIdx === -1) {
           // If the item doesn't exist yet.
           const itemData = state.itemsData.find((item) => item.id === id);
@@ -78,7 +81,7 @@ const reducer = (state: IState, action: Action) => {
             ),
           };
         }
-      case ActionTypes.Remove:
+      case ActionTypes.RemoveItem:
         if (itemIdx === -1) {
           return state;
         } else {
@@ -99,7 +102,7 @@ const reducer = (state: IState, action: Action) => {
           }
         }
     }
-  } else if (action.type === ActionTypes.Store) {
+  } else if (action.type === ActionTypes.StoreItems) {
     const [newItemsData, settings] = action.payload;
     return {
       ...state,

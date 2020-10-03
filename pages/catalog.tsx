@@ -43,7 +43,7 @@ const Catalog = ({ items, settings }: IProps) => {
   const { orderItems } = useContext(StateContext);
 
   useEffect(() => {
-    dispatch({ type: ActionTypes.Store, payload: [items, settings] });
+    dispatch({ type: ActionTypes.StoreItems, payload: [items, settings] });
   }, [items]);
 
   return (
