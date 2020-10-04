@@ -116,6 +116,7 @@ const Item = ({
           <Price>{formatPrice(price)}</Price>
           <span>
             <IconButton
+              data-testid="remove-item-btn"
               onClick={() => {
                 dispatch({ type: ActionTypes.RemoveItem, payload: id });
                 setAmount(amount < 1 ? 0 : amount - 1);
@@ -123,8 +124,9 @@ const Item = ({
             >
               -
             </IconButton>
-            <Amount>{amount}</Amount>
+            <Amount data-testid="item-amount">{amount}</Amount>
             <IconButton
+              data-testid="add-item-btn"
               onClick={() => {
                 dispatch({ type: ActionTypes.AddItem, payload: id });
                 setAmount(amount + 1);
