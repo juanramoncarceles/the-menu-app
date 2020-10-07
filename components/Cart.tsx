@@ -210,7 +210,9 @@ const Cart = () => {
                 <th scope="col">Price</th>
               </tr>
             </thead>
-            <tbody>{createOrderTableJSX(orderItems, categoriesData)}</tbody>
+            <tbody data-testid="order-body">
+              {createOrderTableJSX(orderItems, categoriesData)}
+            </tbody>
             <tfoot>
               <tr>
                 <td
@@ -232,7 +234,10 @@ const Cart = () => {
       <DockedView open={isOpen}>
         <div>{orderItems.reduce((acc, curr) => acc + curr.qty, 0)} items</div>
         <OpenCartBtnContainer>
-          <OpenCartBtn onClick={() => setIsOpen(!isOpen)}>
+          <OpenCartBtn
+            onClick={() => setIsOpen(!isOpen)}
+            data-testid="open-order-btn"
+          >
             View order
           </OpenCartBtn>
         </OpenCartBtnContainer>
