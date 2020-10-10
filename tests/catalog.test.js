@@ -1,5 +1,4 @@
 import React from "react";
-import "@testing-library/jest-dom";
 import { render, screen } from "../test-utils";
 import { mockNextUseRouter } from "./useRouter-mock-helper";
 import Catalog from "../pages/catalog";
