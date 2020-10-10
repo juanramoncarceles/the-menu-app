@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "../test-utils";
-import { mockNextUseRouter } from "./useRouter-mock-helper";
+import { mockNextUseRouter } from "./_useRouter-mock-helper";
 import Catalog from "../pages/catalog";
 import { StateContext } from "../contexts/AppContext";
 
@@ -67,7 +67,7 @@ test("Catalog renders items with amount from context", () => {
     itemsData: [],
     categoriesData: [],
     settings: settings,
-    formatPrice: (f) => f.toString(),
+    formatPrice: (f: number) => f.toString(),
   };
 
   const items = [item];

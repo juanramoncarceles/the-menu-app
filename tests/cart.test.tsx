@@ -36,7 +36,7 @@ test("Total price is calculated successfully", () => {
     itemsData: [],
     categoriesData: [],
     settings: settings,
-    formatPrice: (f) => f.toString(),
+    formatPrice: (f: number) => f.toString(),
   };
 
   render(
