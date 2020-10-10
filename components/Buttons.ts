@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { defaultTheme, typeScale } from "../styles";
+import { styled } from "../styles";
 
 const BaseButton = styled.button`
   border-style: none;
@@ -8,7 +7,7 @@ const BaseButton = styled.button`
   transition: background-color 0.2s linear, color 0.2s linear;
 
   &:disabled {
-    background-color: ${defaultTheme.disabled} !important;
+    background-color: ${({theme}) => theme.disabled} !important;
     cursor: not-allowed;
   }
 `;
@@ -19,14 +18,14 @@ const BaseTextButton = styled.button`
   padding: 6px 24px;
   border-radius: 12px;
   font-family: inherit;
-  font-size: ${typeScale.paragraph};
+  font-size: ${({theme}) => theme.typeScale.paragraph};
 
   &:focus {
-    box-shadow: 0 0 0 3px ${defaultTheme.primaryActiveColor};
+    box-shadow: 0 0 0 3px ${({theme}) => theme.primaryActiveColor};
   }
 
   &:disabled {
-    color: ${defaultTheme.textOnDisabled};
+    color: ${({theme}) => theme.textOnDisabled};
   }
 `;
 
@@ -34,11 +33,11 @@ const BaseTextButton = styled.button`
 
 const StandardTextButton = styled(BaseTextButton)`
   &:hover {
-    background-color: ${defaultTheme.primaryHoverColor};
+    background-color: ${({theme}) => theme.primaryHoverColor};
   }
 
   &:active {
-    background-color: ${defaultTheme.primaryActiveColor};
+    background-color: ${({theme}) => theme.primaryActiveColor};
     border-color: transparent;
   }
 
@@ -48,88 +47,88 @@ const StandardTextButton = styled(BaseTextButton)`
 `;
 
 export const PrimaryButton = styled(StandardTextButton)`
-  color: ${defaultTheme.textColorInverted};
-  border: 3px solid ${defaultTheme.primaryBorderColor};
-  background-color: ${defaultTheme.primaryColor};
+  color: ${({theme}) => theme.textColorInverted};
+  border: 3px solid ${({theme}) => theme.primaryBorderColor};
+  background-color: ${({theme}) => theme.primaryColor};
 `;
 
 export const SecondaryButton = styled(StandardTextButton)`
-  border: 3px solid ${defaultTheme.primaryColor};
+  border: 3px solid ${({theme}) => theme.primaryColor};
 
   &:hover,
   &:focus,
   &:active {
-    color: ${defaultTheme.textColorInverted};
+    color: ${({theme}) => theme.textColorInverted};
     border-color: transparent;
   }
 
   &:focus {
-    background-color: ${defaultTheme.primaryColor};
+    background-color: ${({theme}) => theme.primaryColor};
   }
 `;
 
 export const TertiaryButton = styled(StandardTextButton)`
-  border: 1px solid ${defaultTheme.primaryColor};
+  border: 1px solid ${({theme}) => theme.primaryColor};
 
   &:hover,
   &:focus,
   &:active {
-    color: ${defaultTheme.textColorInverted};
+    color: ${({theme}) => theme.textColorInverted};
     border-color: transparent;
   }
 
   &:focus {
-    background-color: ${defaultTheme.primaryColor};
+    background-color: ${({theme}) => theme.primaryColor};
   }
 `;
 
 // STATE BUTTONS: SUCCESS, WARNING AND ERROR
 
 export const SuccessButton = styled(BaseTextButton)`
-  background-color: ${defaultTheme.status.successColor};
+  background-color: ${({theme}) => theme.status.successColor};
 
   &:hover,
   &:focus,
   &:active {
-    color: ${defaultTheme.textColorInverted};
+    color: ${({theme}) => theme.textColorInverted};
   }
 
   &:hover {
-    background-color: ${defaultTheme.status.successColorHover};
+    background-color: ${({theme}) => theme.status.successColorHover};
   }
 
   &:active {
-    background-color: ${defaultTheme.status.successColorActive};
+    background-color: ${({theme}) => theme.status.successColorActive};
   }
 `;
 
 export const WarningButton = styled(BaseTextButton)`
-  background-color: ${defaultTheme.status.warningColor};
+  background-color: ${({theme}) => theme.status.warningColor};
 
   &:hover {
-    background-color: ${defaultTheme.status.warningColorHover};
+    background-color: ${({theme}) => theme.status.warningColorHover};
   }
 
   &:active {
-    background-color: ${defaultTheme.status.warningColorActive};
+    background-color: ${({theme}) => theme.status.warningColorActive};
   }
 `;
 
 export const ErrorButton = styled(BaseTextButton)`
-  background-color: ${defaultTheme.status.errorColor};
+  background-color: ${({theme}) => theme.status.errorColor};
 
   &:hover,
   &:focus,
   &:active {
-    color: ${defaultTheme.textColorInverted};
+    color: ${({theme}) => theme.textColorInverted};
   }
 
   &:hover {
-    background-color: ${defaultTheme.status.errorColorHover};
+    background-color: ${({theme}) => theme.status.errorColorHover};
   }
 
   &:active {
-    background-color: ${defaultTheme.status.errorColorActive};
+    background-color: ${({theme}) => theme.status.errorColorActive};
   }
 `;
 
@@ -139,9 +138,9 @@ export const IconButton = styled(BaseButton)`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid ${defaultTheme.primaryColor};
+  border: 1px solid ${({theme}) => theme.primaryColor};
 
   &:hover {
-    background-color: ${defaultTheme.primaryHoverColor};
+    background-color: ${({theme}) => theme.primaryHoverColor};
   }
 `;

@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { StateContext } from "../contexts/AppContext";
 import type { OrderItem, CategoryData } from "../types";
-import styled from "styled-components";
+import { styled } from "../styles";
 
 const dockedHeight = 60;
 
@@ -31,7 +31,9 @@ const DockedView = styled.div<{ open: boolean }>`
   right: 0px;
   left: 0px;
   bottom: 0px;
-  background-color: pink;
+  color: ${({theme}) => theme.textColorInverted};
+  border-top: 5px solid ${({ theme }) => theme.primaryBorderColor};
+  background-color: ${({theme}) => theme.primaryColor};
 
   ${({ open }) =>
     open
@@ -63,18 +65,19 @@ const FullView = styled.div<{ open: boolean }>`
   transition-property: width, max-height, background-color, opacity;
   transition-duration: 1s, 1s, 1s, 0s;
 
-  ${({ open }) =>
+  ${({ open, theme }) =>
     open
       ? `width: 400px;
       max-height: 90%;
       opacity: 1;
       transition-delay: 0s, 0s, 0s, 0s;
-      background-color: gray;`
+      background-color: ${theme.secondaryNeutralColor};
+      box-shadow: 0px 4px 10px 5px rgba(0,0,0,0.25);`
       : `width: 100%;
       max-height: ${dockedHeight}px;
       opacity: 0;
       transition-delay: 0s, 0s, 0s, 2s;
-      background-color: pink;`}
+      background-color: ${theme.primaryColor};`}
 `;
 
 const CloseBtn = styled.button`

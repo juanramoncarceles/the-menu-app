@@ -1,5 +1,6 @@
+import baseStyled, { ThemedStyledInterface } from "styled-components";
 import { primary, neutral, success, warning, error } from "./colors";
-import { font } from "./typography";
+import { font, typeScale } from "./typography";
 
 export const defaultTheme = {
   primaryColor: primary[100],
@@ -13,8 +14,10 @@ export const defaultTheme = {
   textOnDisabled: neutral[100],
   formElementBackground: primary[500],
   textOnFormElementBackground: neutral[500],
+  secondaryNeutralColor: neutral[200],
   headingFont: font.secondary,
   bodyFont: font.primary,
+  typeScale,
   status: {
     successColor: success[100],
     successColorHover: success[200],
@@ -24,6 +27,39 @@ export const defaultTheme = {
     warningColorActive: warning[300],
     errorColor: error[100],
     errorColorHover: error[200],
-    errorColorActive: error[300]    
+    errorColorActive: error[300]
   }
 };
+
+export const darkTheme: Theme = {
+  primaryColor: "#000",
+  primaryHoverColor: "#000",
+  primaryBorderColor: "#000",
+  primaryActiveColor: "#000",
+  textColorOnPrimary: "#000",
+  textColor: "#000",
+  textColorInverted: "#000",
+  disabled: "#000",
+  textOnDisabled: "#000",
+  formElementBackground: "#000",
+  textOnFormElementBackground: "#000",
+  secondaryNeutralColor: "#000",
+  headingFont: "#000",
+  bodyFont: "#000",
+  typeScale,
+  status: {
+    successColor: "#000",
+    successColorHover: "#000",
+    successColorActive: "#000",
+    warningColor: "#000",
+    warningColorHover: "#000",
+    warningColorActive: "#000",
+    errorColor: "#000",
+    errorColorHover: "#000",
+    errorColorActive: "#000"
+  }
+}
+
+export type Theme = typeof defaultTheme;
+
+export const styled = baseStyled as ThemedStyledInterface<Theme>;

@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
-import styled from "styled-components";
 import { DispatchContext, StateContext } from "../contexts/AppContext";
 import { ActionTypes } from "../types/enums";
 import { IconButton } from "./Buttons";
+import { styled } from "../styles";
 
 interface IProps {
   id: string;
@@ -34,7 +34,7 @@ const Root = styled.div<RootProps>`
     width: calc(100% + ${2 * activeBorderOffset}px);
     height: calc(100% + ${2 * activeBorderOffset}px);
     border-radius: ${radius + activeBorderOffset}px;
-    border: 3px solid ${({ theme }) => theme.primary[100]};
+    border: 3px solid ${({ theme }) => theme.primaryColor};
     z-index: -1;
     left: -${activeBorderOffset}px;
     top: -${activeBorderOffset}px;
@@ -61,7 +61,7 @@ const Info = styled.div`
 
 const ItemTitle = styled.h4`
   margin-bottom: 0.8rem;
-  font-size: ${({ theme }) => theme.typeScale.header5};
+  font-size: ${({theme}) => theme.typeScale.header5};
 `;
 
 const Description = styled.p`
@@ -77,7 +77,7 @@ const PriceAndAmount = styled.div`
 `;
 
 const Price = styled.span`
-  font-size: ${({ theme }) => theme.typeScale.header5};
+  font-size: ${({theme}) => theme.typeScale.header5};
 `;
 
 const Amount = styled.span`
@@ -85,7 +85,7 @@ const Amount = styled.span`
   width: 1.5rem;
   margin-right: 10px;
   margin-left: 10px;
-  font-size: ${({ theme }) => theme.typeScale.header5};
+  font-size: ${({theme}) => theme.typeScale.header5};
 `;
 
 const Item = ({
