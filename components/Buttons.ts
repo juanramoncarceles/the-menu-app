@@ -6,23 +6,24 @@ const BaseButton = styled.button`
   background-color: transparent;
   transition: background-color 0.2s linear, color 0.2s linear;
 
+  &:focus {
+    box-shadow: 0 0 0 3px ${({theme}) => theme.primaryActiveColor};
+  }
+
   &:disabled {
     background-color: ${({theme}) => theme.disabled} !important;
+    border-color: transparent;
     cursor: not-allowed;
   }
 `;
 
 // BASE BUTTON FOR BUTTONS WITH TEXT
 
-const BaseTextButton = styled.button`
+export const BaseTextButton = styled(BaseButton)`
   padding: 6px 24px;
   border-radius: 12px;
   font-family: inherit;
   font-size: ${({theme}) => theme.typeScale.paragraph};
-
-  &:focus {
-    box-shadow: 0 0 0 3px ${({theme}) => theme.primaryActiveColor};
-  }
 
   &:disabled {
     color: ${({theme}) => theme.textOnDisabled};
@@ -38,10 +39,6 @@ const StandardTextButton = styled(BaseTextButton)`
 
   &:active {
     background-color: ${({theme}) => theme.primaryActiveColor};
-    border-color: transparent;
-  }
-
-  &:disabled {
     border-color: transparent;
   }
 `;
@@ -137,10 +134,27 @@ export const ErrorButton = styled(BaseTextButton)`
 export const IconButton = styled(BaseButton)`
   width: 40px;
   height: 40px;
+  padding: 0;
   border-radius: 50%;
   border: 1px solid ${({theme}) => theme.primaryColor};
+  fill: ${({theme}) => theme.primaryColor};
+
+  & > svg {
+    display: block;
+    margin: auto;
+  }
 
   &:hover {
+    fill: ${({theme}) => theme.textColorInverted};
     background-color: ${({theme}) => theme.primaryHoverColor};
+  }
+
+  &:active {
+    border-color: transparent;
+    background-color: ${({theme}) => theme.primaryActiveColor};
+  }
+
+  &:disabled {
+    fill: ${({theme}) => theme.textOnDisabled};
   }
 `;
