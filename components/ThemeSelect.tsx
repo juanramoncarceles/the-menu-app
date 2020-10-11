@@ -1,13 +1,14 @@
-interface IProps {
-  changeTheme: (key: string) => void;
-}
+import { useContext } from "react";
+import { DispatchContext } from "../contexts/AppContext";
+import { ActionTypes } from "../types/enums";
 
-const ThemeSelect = ({changeTheme}: IProps) => {
+const ThemeSelect = () => {
+  const dispatch = useContext(DispatchContext);
   
   return (
   <div className="root">
     <label htmlFor="theme">Theme</label>
-    <select name="theme" id="theme" onChange={e => changeTheme(e.target.value)}>
+    <select name="theme" id="theme" onChange={e => dispatch({ type: ActionTypes.ChangeTheme, payload: e.target.value })}>
       <option value="light">Light</option>
       <option value="dark">Dark</option>
     </select>

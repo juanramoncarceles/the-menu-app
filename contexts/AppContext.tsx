@@ -3,11 +3,11 @@ import {
   useReducer,
   ReactNode,
   useEffect,
-  useContext,
 } from "react";
 import type { OrderItem, ItemData, AppSettings, CategoryData } from "../types";
 import { ActionTypes } from "../types/enums";
 import { mergeArraysOfObjects, formatPriceFactory } from "../shared/utils";
+import { defaultTheme, darkTheme, Theme } from "../styles";
 
 interface IState {
   orderItems: OrderItem[];
@@ -15,6 +15,7 @@ interface IState {
   categoriesData: CategoryData[];
   settings: AppSettings;
   formatPrice: (n: number) => string;
+  theme: Theme;
 }
 
 type Action =
@@ -33,6 +34,10 @@ type Action =
   | {
       type: ActionTypes.Factory;
       payload: (n: number) => string;
+    }
+  | {
+      type: ActionTypes.ChangeTheme;
+      payload: string;
     };
 
 const initialState: IState = {
@@ -41,6 +46,7 @@ const initialState: IState = {
   categoriesData: [],
   settings: { currencySymbol: "", priceAmountDecimals: 3 },
   formatPrice: (f) => f.toString(),
+  theme: defaultTheme,
 };
 
 const StateContext = createContext<IState>(initialState);
@@ -116,6 +122,20 @@ const reducer = (state: IState, action: Action) => {
     };
   } else if (action.type === ActionTypes.Factory) {
     return { ...state, formatPrice: action.payload };
+  } else if (action.type === ActionTypes.ChangeTheme) {
+    let theme;
+    switch (action.payload) {
+      case 'light':
+        theme = defaultTheme;
+        break;
+      case 'dark':
+        theme = darkTheme;
+        break;
+      default:
+        theme = defaultTheme;
+        break;
+    }
+    return { ...state, theme };
   } else {
     return state;
   }
