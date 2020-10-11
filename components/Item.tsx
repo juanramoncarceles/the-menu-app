@@ -3,6 +3,7 @@ import { DispatchContext, StateContext } from "../contexts/AppContext";
 import { ActionTypes } from "../types/enums";
 import { IconButton } from "./Buttons";
 import { styled } from "../styles";
+import { AddIcon, SubtractIcon } from "./Icons";
 
 interface IProps {
   id: string;
@@ -38,7 +39,8 @@ const Root = styled.div<RootProps>`
     z-index: -1;
     left: -${activeBorderOffset}px;
     top: -${activeBorderOffset}px;
-    visibility: ${({ active }) => (active ? "visible" : "hidden")};
+    opacity: ${({ active }) => active ? 1 : 0};
+    transition: opacity 0.8s;
   }
 `;
 
@@ -53,7 +55,7 @@ const Info = styled.div`
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
-  padding: 1rem;
+  padding: 0.5rem;
   text-align: center;
   border-radius: ${radius}px;
   background-color: #fff;
@@ -77,7 +79,13 @@ const PriceAndAmount = styled.div`
 `;
 
 const Price = styled.span`
+  padding: 0 8px;
   font-size: ${({theme}) => theme.typeScale.header5};
+`;
+
+const CounterBlock = styled.span`
+  display: flex;
+  align-items: center;
 `;
 
 const Amount = styled.span`
@@ -114,7 +122,7 @@ const Item = ({
         <Description>{description}</Description>
         <PriceAndAmount>
           <Price>{formatPrice(price)}</Price>
-          <span>
+          <CounterBlock>
             <IconButton
               data-testid="remove-item-btn"
               onClick={() => {
@@ -122,7 +130,7 @@ const Item = ({
                 setAmount(amount < 1 ? 0 : amount - 1);
               }}
             >
-              -
+              <SubtractIcon />
             </IconButton>
             <Amount data-testid="item-amount">{amount}</Amount>
             <IconButton
@@ -132,9 +140,9 @@ const Item = ({
                 setAmount(amount + 1);
               }}
             >
-              +
+              <AddIcon />
             </IconButton>
-          </span>
+          </CounterBlock>
         </PriceAndAmount>
       </Info>
     </Root>
