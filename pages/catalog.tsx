@@ -1,11 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import Item from "../components/Item";
 import Link from "next/link";
 import { GetServerSideProps } from "next";
 import { DispatchContext, StateContext } from "../contexts/AppContext";
 import type { ItemData, AppSettings } from "../types";
-import styled from "styled-components";
+import { styled } from "../styles/themes";
 import { ActionTypes } from "../types/enums";
 import LayoutWithCart from "../components/layouts/LayoutWithCart";
 
@@ -15,28 +15,48 @@ interface IProps {
 }
 
 const BackLink = styled.div`
-  position: absolute;
+  position: fixed;
   left: 10px;
   top: 10px;
+  z-index: 20;
 `;
 
-const CatalogTitle = styled.h3`
+interface CatalogTitleProps {
+  small: boolean;
+}
+
+const CatalogTitle = styled.div<CatalogTitleProps>`
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  top: 0;
   text-align: center;
-  padding-top: 2rem;
+  padding-top: ${({small}) => small ? '0.6rem' : '1.4rem'};
   padding-bottom: 2rem;
-  font-size: 3rem;
+  background-image: linear-gradient(#fff, rgba(255,255,255,0));
+  transition: padding 1s;
+
+  & > h3 {
+    font-size: ${({theme}) => theme.typeScale.header1};
+    transform-origin: top;
+    transform: ${({small}) => small ? 'scale(0.7)' : 'scale(1)'};
+    transition: transform 1s;
+  }
 `;
 
 const ItemsContainer = styled.div`
   display: grid;
   justify-content: center;
   align-content: center;
+  margin: 7rem auto 5.5rem;
+  max-width: 1000px;
   grid-template-columns: repeat(auto-fit, 250px);
   grid-gap: 20px;
   gap: 20px;
 `;
 
 const Catalog = ({ items, settings }: IProps) => {
+  const [smallTitle, setSmallTitle] = useState(false);
   const router = useRouter();
 
   const dispatch = useContext(DispatchContext);
@@ -44,16 +64,32 @@ const Catalog = ({ items, settings }: IProps) => {
 
   useEffect(() => {
     dispatch({ type: ActionTypes.StoreItems, payload: [items, settings] });
+
+    window.addEventListener('scroll', handleScroll);
+
+    return function cleanup() {
+      window.removeEventListener('scroll', handleScroll);
+    }
   }, [items]);
+
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setSmallTitle(true);
+    } else {
+      setSmallTitle(false);
+    }
+  };
 
   return (
     <LayoutWithCart>
       <BackLink>
         <Link href="/menu">
-          <a>The menu</a>
+          <a>Back to menu</a>
         </Link>
       </BackLink>
-      <CatalogTitle>This is the catalog for {router.query.name}</CatalogTitle>
+      <CatalogTitle small={smallTitle}>
+        <h3>{router.query.name}</h3>
+      </CatalogTitle>
       <ItemsContainer>
         {items.map((item: ItemData, i: number) => {
           const itemInOrder = orderItems.find(
