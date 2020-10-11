@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { StateContext } from "../contexts/AppContext";
 import type { OrderItem, CategoryData } from "../types";
 import { styled } from "../styles";
+import { PrimaryButton, BaseTextButton } from "./Buttons";
 
 const dockedHeight = 60;
 
@@ -13,6 +14,7 @@ const Root = styled.div<{ open: boolean }>`
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 15;
   transition: top 1s;
 
   ${({ open }) =>
@@ -53,9 +55,12 @@ const OpenCartBtnContainer = styled.div`
   justify-content: center;
 `;
 
-const OpenCartBtn = styled.button`
+const OpenCartBtn = styled(BaseTextButton)`
   position: absolute;
   transform: translateY(-50%);
+  font-size: ${({theme}) => theme.typeScale.header4};
+  color: ${({theme}) => theme.textColorInverted};
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const FullView = styled.div<{ open: boolean }>`
@@ -116,7 +121,7 @@ const OrderItemName = styled.th`
   font-weight: normal;
 `;
 
-const OrderButton = styled.button`
+const OrderButton = styled(PrimaryButton)`
   display: block;
   margin: 15px auto 0;
 `;
