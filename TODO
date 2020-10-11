@@ -18,6 +18,9 @@ CHANGES:
   ☐ Make the food item svg image placeholder be inline? @low 
 
 FEATURES:
+  ☐ Add subcategories, important for example in the case of drinks.
+  ☐ If there are no items added to the order when opening the cart a message indicating this should appear.
+  ☐ When adding an item to the cart and the total price increases a number transition could be added.
   ☐ Create a mock for the fetched data from the back-end API to avoid calling it during front-end development.
   ☐ Store order data in localStorage as well so it is persistent.
     Maybe this is not a good idea if a new client comes? A reset button could be useful in any case.
