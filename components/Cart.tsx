@@ -181,6 +181,7 @@ const Cart = () => {
     orderItems: OrderItem[],
     categories: CategoryData[]
   ) => {
+    // Create an object with the order items organized by category.
     const orderContents: { [key: string]: OrderItem[] } = {};
     orderItems.forEach((item) => {
       if (orderContents.hasOwnProperty(item.data.category.id)) {
@@ -189,8 +190,12 @@ const Cart = () => {
         orderContents[item.data.category.id] = [item];
       }
     });
-    const orderJSX = [];
-    for (const [sectionId, items] of Object.entries(orderContents)) {
+    // Sort the contents according to how categories are stored.
+    const sortedOrderContents = Object.entries(orderContents)
+      .sort((a, b) => categoriesData.findIndex(c => c.id === a[0]) - categoriesData.findIndex(c => c.id === b[0]));
+    // Create the array of JSX elements that will be returned.
+    const orderJSX: JSX.Element[] = [];
+    for (const [sectionId, items] of sortedOrderContents) {
       const categoryData = categories.find(
         (category) => category.id === sectionId
       );
