@@ -1,8 +1,9 @@
 import React from "react";
 import { render, screen } from "../test-utils";
 import { mockNextUseRouter } from "./_useRouter-mock-helper";
-import Catalog from "../pages/catalog";
+import Catalog from "../pages/[lang]/catalog/[slug]";
 import { StateContext } from "../contexts/AppContext";
+import { defaultTheme } from "../styles";
 
 beforeEach(() => {
   mockNextUseRouter({
@@ -22,7 +23,7 @@ test("Catalog renders items", () => {
     price: anyPrice,
     description: "",
     image: { url: "" },
-    category: { id: "0", name: "Any category" },
+    category: { id: "0", name: "Any category", slug: "any-category" },
   };
 
   const item2 = {
@@ -31,7 +32,7 @@ test("Catalog renders items", () => {
     price: anyPrice,
     description: "",
     image: { url: "" },
-    category: { id: "0", name: "Any category" },
+    category: { id: "0", name: "Any category", slug: "any-category" },
   };
 
   const settings = {
@@ -41,7 +42,7 @@ test("Catalog renders items", () => {
 
   const items = [item1, item2];
 
-  render(<Catalog items={items} settings={settings} />);
+  render(<Catalog lang="en" items={items} settings={settings} />);
 
   expect(screen.getByText("A first item")).toBeInTheDocument();
   expect(screen.getByText("A second item")).toBeInTheDocument();
@@ -54,7 +55,7 @@ test("Catalog renders items with amount from context", () => {
     price: anyPrice,
     description: "",
     image: { url: "" },
-    category: { id: "0", name: "Any category" },
+    category: { id: "0", name: "Any category", slug: "any-category" },
   };
 
   const settings = {
@@ -68,13 +69,14 @@ test("Catalog renders items with amount from context", () => {
     categoriesData: [],
     settings: settings,
     formatPrice: (f: number) => f.toString(),
+    theme: defaultTheme,
   };
 
   const items = [item];
 
   render(
     <StateContext.Provider value={state}>
-      <Catalog items={items} settings={settings} />
+      <Catalog lang="en" items={items} settings={settings} />
     </StateContext.Provider>
   );
 

@@ -12,6 +12,7 @@ export interface ItemData extends BaseObject {
 
 export interface CategoryData extends BaseObject {
   name: string;
+  slug: string;
 }
 
 export interface OrderItem extends BaseObject {
