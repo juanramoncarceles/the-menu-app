@@ -5,6 +5,8 @@ import {
   useEffect,
 } from "react";
 import type { OrderItem, ItemData, AppSettings, CategoryData } from "../types";
+import { Locale } from "../translations/types";
+import { locales } from "../translations/config";
 import { ActionTypes } from "../types/enums";
 import { mergeArraysOfObjects, formatPriceFactory } from "../shared/utils";
 import { defaultTheme, darkTheme, Theme } from "../styles";
@@ -16,6 +18,7 @@ interface IState {
   settings: AppSettings;
   formatPrice: (n: number) => string;
   theme: Theme;
+  locale: Locale;
 }
 
 type Action =
@@ -38,7 +41,11 @@ type Action =
   | {
       type: ActionTypes.ChangeTheme;
       payload: string;
-    };
+    }
+  | {
+      type: ActionTypes.ChangeLanguage;
+      payload: Locale;
+  };
 
 const initialState: IState = {
   orderItems: [],
@@ -47,6 +54,7 @@ const initialState: IState = {
   settings: { currencySymbol: "", priceAmountDecimals: 3 },
   formatPrice: (f) => f.toString(),
   theme: defaultTheme,
+  locale: locales[0],
 };
 
 const StateContext = createContext<IState>(initialState);
@@ -136,6 +144,11 @@ const reducer = (state: IState, action: Action) => {
         break;
     }
     return { ...state, theme };
+  } else if (action.type === ActionTypes.ChangeLanguage) {
+    return {
+      ...state,
+      locale: action.payload,
+    };
   } else {
     return state;
   }

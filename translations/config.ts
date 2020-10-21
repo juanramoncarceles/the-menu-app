@@ -1,3 +1,6 @@
+/**
+ * First one corresponds to the defaultLocale.
+ */
 export const locales = ["en", "es"] as const;
 
 export const languageNames: {[key in typeof locales[number]]: string} = {

@@ -4,5 +4,6 @@ export enum ActionTypes {
   StoreItems = "STORE_ITEMS_DATA",
   StoreCategories = "STORE_CATEGORIES_DATA",
   Factory = "RUN_FACTORY",
-  ChangeTheme = "CHANGE_THEME"
+  ChangeTheme = "CHANGE_THEME",
+  ChangeLanguage = "CHANGE_LANGUAGE",
 }

@@ -5,11 +5,12 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { CategoryData } from "../../types";
 import { ActionTypes } from "../../types/enums";
 import { locales } from "../../translations/config";
+import { Locale } from "../../translations/types";
 import { DispatchContext } from "../../contexts/AppContext";
 import LayoutWithCart from "../../components/layouts/LayoutWithCart";
 
 interface IProps {
-  lang: string,
+  lang: Locale,
   categories: CategoryData[];
 }
 

@@ -1,8 +1,10 @@
 import { useState, useContext } from "react";
+
 import { StateContext } from "../contexts/AppContext";
 import type { OrderItem, CategoryData } from "../types";
 import { styled } from "../styles";
 import { PrimaryButton, BaseTextButton } from "./Buttons";
+import useTranslation from "../hooks/useTranslation";
 
 const dockedHeight = 60;
 
@@ -138,6 +140,7 @@ const OrderTotalPrice = styled.td`
 const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { orderItems, categoriesData, formatPrice } = useContext(StateContext);
+  const { t } = useTranslation();
 
   const totalPrice = orderItems.reduce(
     (acc: number, current: OrderItem) => acc + current.data.price * current.qty,
@@ -215,7 +218,7 @@ const Cart = () => {
         <OrderContent open={isOpen}>
           <CloseBtn onClick={() => setIsOpen(!isOpen)}>X</CloseBtn>
           <table style={{ width: "100%" }}>
-            <TableCaption>Your order</TableCaption>
+            <TableCaption>{t("yourOrder")}</TableCaption>
             <thead style={{ visibility: "hidden", position: "absolute" }}>
               <tr>
                 <th scope="col">Food item</th>
@@ -235,13 +238,13 @@ const Cart = () => {
               </tr>
               <tr>
                 <th colSpan={2} scope="row" style={{ visibility: "hidden" }}>
-                  Total
+                  {t("total")}
                 </th>
                 <OrderTotalPrice>{formatPrice(totalPrice)}</OrderTotalPrice>
               </tr>
             </tfoot>
           </table>
-          <OrderButton>Order</OrderButton>
+        <OrderButton>{t("order")}</OrderButton>
         </OrderContent>
       </FullView>
       <DockedView open={isOpen}>
@@ -251,7 +254,7 @@ const Cart = () => {
             onClick={() => setIsOpen(!isOpen)}
             data-testid="open-order-btn"
           >
-            View order
+            {t("viewOrder")}
           </OpenCartBtn>
         </OpenCartBtnContainer>
         <div>{formatPrice(totalPrice)}</div>

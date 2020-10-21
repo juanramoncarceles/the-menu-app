@@ -1,12 +1,20 @@
 import { Strings } from "./types";
 
-export const LangStrings: Strings = {
+const strings: Strings = {
   en: {
-    order: 'Order',
-    backToMenu: 'Back to menu',
+    order: "Order",
+    viewOrder: "View order",
+    yourOrder: "Your order",
+    backToMenu: "Back to menu",
+    total: "Total",
   },
   es: {
-    about: 'Pedir',
-    backToMenu: 'Volver al menú',
+    order: "Pedir",
+    viewOrder: "Ver pedido",
+    yourOrder: "Su pedido",
+    backToMenu: "Volver al menú",
+    total: "Total",
   },
 }
+
+export default strings;
