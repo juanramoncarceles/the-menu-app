@@ -1,4 +1,6 @@
 BUGS:
+  ☐ Remove lang picker from the index page.
+  ☐ Add tests for the language change logic.
   ☐ Save 'settings' in AppContext also from the 'menu' page.
     Implementation would be similar to the 'catalog' page.
   ☐ If I access the 'catalog' page first then I have no data about categories in AppContext, so in the cart doesn't appear any category information.
