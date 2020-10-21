@@ -22,7 +22,7 @@ const LanguageSelect = () => {
   return (
     <div className="root">
       <label htmlFor="lang">LANG</label>
-      <select name="lang" id="lang" onChange={(e) => {
+      <select name="lang" id="lang" value={router.query.lang} onChange={(e) => {
         // Creates the new path by replacing the locale in the current path for the new locale.
         const langPath = router.asPath.replace(`/${router.query.lang}/`, `/${e.target.value}/`);
         router.push(langPath);
