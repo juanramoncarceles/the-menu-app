@@ -4,6 +4,7 @@ import { mockNextUseRouter } from "./_useRouter-mock-helper";
 import Catalog from "../pages/[lang]/catalog/[slug]";
 import { StateContext } from "../contexts/AppContext";
 import { defaultTheme } from "../styles";
+import { locales } from "../translations/config";
 
 beforeEach(() => {
   mockNextUseRouter({
@@ -70,6 +71,7 @@ test("Catalog renders items with amount from context", () => {
     settings: settings,
     formatPrice: (f: number) => f.toString(),
     theme: defaultTheme,
+    locale: locales[0],
   };
 
   const items = [item];

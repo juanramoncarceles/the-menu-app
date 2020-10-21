@@ -2,6 +2,8 @@ import React from "react";
 import Cart from "../components/Cart";
 import { StateContext } from "../contexts/AppContext";
 import { render, screen } from "../test-utils";
+import { defaultTheme } from "../styles";
+import { locales } from "../translations/config";
 
 
 test("Total price is calculated successfully", () => {
@@ -11,7 +13,7 @@ test("Total price is calculated successfully", () => {
     price: 1.50,
     description: "",
     image: { url: "" },
-    category: { id: "0", name: "Any category" },
+    category: { id: "0", name: "Any category", slug: "any-category" },
   };
 
   const item2 = {
@@ -20,7 +22,7 @@ test("Total price is calculated successfully", () => {
     price: 2.50,
     description: "",
     image: { url: "" },
-    category: { id: "0", name: "Any category" },
+    category: { id: "0", name: "Any category", slug: "any-category" },
   };
 
   const settings = {
@@ -37,6 +39,8 @@ test("Total price is calculated successfully", () => {
     categoriesData: [],
     settings: settings,
     formatPrice: (f: number) => f.toString(),
+    theme: defaultTheme,
+    locale: locales[0],
   };
 
   render(
