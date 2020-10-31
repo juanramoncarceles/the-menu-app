@@ -4,8 +4,6 @@ import { useRouter } from "next/router";
 
 import { StateContext } from "../../contexts/AppContext";
 import { ThemeProvider } from "styled-components";
-import LanguageSelect from '../Language';
-import ThemeSelect from "../ThemeSelect";
 import { GlobalStyle } from '../../styles';
 import { ActionTypes } from "../../types/enums";
 import { DispatchContext } from "../../contexts/AppContext";
@@ -33,8 +31,6 @@ const MainLayout = ({children}: IProps) => {
         <link rel="icon" href="/favicon.ico" />
         <link href="https://fonts.googleapis.com/css2?family=Bellota+Text&family=Bellota:wght@700&display=swap" rel="stylesheet" />
       </Head>
-      <LanguageSelect />
-      <ThemeSelect />
       {children}
       <GlobalStyle />
     </ThemeProvider>
