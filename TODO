@@ -15,12 +15,16 @@ BUGS:
   ☐ Add margin bottom on the items container to avoid last items to remain behaind the cart component at the bottom of the viewport.
 
 CHANGES:
+  ☐ While there is nothing in the cart hide the button "View order" so it cannot be opened.
   ☐ Make the food item svg image placeholder be inline? @low 
   ☐ Store orderItems already sorted in context instead than sorting them each time in createOrderTableJSX() of Cart.tsx.
     They could be stored in a nested array with the first item as the id of the category and the second an array of the items in that category.
     Inside the reducer this array would be sorted each time a new item would be stored, and also children arrays removed if removing all items of a category.
-
+    
 FEATURES:
+  ☐ Get the name of the restaurant from the back-end to use it in index.tsx and in the <title> of the pages.
+  ☐ In index.tsx get the background image from the back-end at build time with getStaticProps().
+  ☐ Add and check accessibility.
   ☐ Add subcategories, important for example in the case of drinks.
   ☐ If there are no items added to the order when opening the cart a message indicating this should appear.
   ☐ When adding an item to the cart and the total price increases a number transition could be added.
