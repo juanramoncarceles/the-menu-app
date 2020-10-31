@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 import type { ItemData, CategoryData, AppSettings } from "../../../types";
@@ -60,7 +59,6 @@ const ItemsContainer = styled.div`
 
 const Catalog = ({ lang, items, settings }: IProps) => {
   const [smallTitle, setSmallTitle] = useState(false);
-  const router = useRouter();
 
   const dispatch = useContext(DispatchContext);
   const { orderItems } = useContext(StateContext);
