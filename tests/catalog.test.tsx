@@ -6,12 +6,14 @@ import { StateContext } from "../contexts/AppContext";
 import { defaultTheme } from "../styles";
 import { locales } from "../translations/config";
 
+// If more than once in a test is required the mocked next router it seems that fails
+// so if this happens in the future change the strategy with another mock function?
 beforeEach(() => {
   mockNextUseRouter({
-    route: "/catalog?name=any",
-    pathname: "/catalog",
-    query: { name: "any" },
-    asPath: "/catalog?name=any",
+    route: "/[lang]/catalog/[slug]",
+    pathname: "/[lang]/catalog/[slug]",
+    query: { lang: "en", slug: "any-category" },
+    asPath: "/en/catalog/any-category",
   });
 });
 
