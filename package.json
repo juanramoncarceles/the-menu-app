@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest"
+    "test": "jest",
+    "mock-api": "cd mock_api && json-server --watch db.json --port 1337"
   },
   "dependencies": {
     "next": "^9.5.5",
