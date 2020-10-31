@@ -2,12 +2,43 @@ import { useContext, useEffect } from "react";
 import Link from "next/link";
 import { GetStaticPaths, GetStaticProps } from "next";
 
+import { styled } from "../../styles";
 import { CategoryData } from "../../types";
 import { ActionTypes } from "../../types/enums";
 import { locales } from "../../translations/config";
 import { Locale } from "../../translations/types";
 import { DispatchContext } from "../../contexts/AppContext";
 import LayoutWithCart from "../../components/layouts/LayoutWithCart";
+
+const MainContainer = styled.main`
+  height: calc(100vh - 60px); // TODO Set the 60 as a variable with the cart height to use at build time.
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  padding: 1rem;
+  // TODO Only when cart is open... set in context a value to know when cart is open.
+  scrollbar-color: rgba(0,0,0,0) rgba(0,0,0,0);
+`;
+
+const CategoryTitle = styled.h2`
+  padding: 3.5rem 0;
+  font-size: ${({theme}) => theme.typeScale.header2};
+  font-family: ${({theme}) => theme.headingFont};
+  text-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
+
+  :first-child {
+    padding-top: 6rem;
+  }
+
+  :last-child {
+    padding-bottom: 6rem;
+  }
+
+  > a {
+    color: ${({theme}) => theme.textColorInverted};
+  }
+`;
 
 interface IProps {
   lang: Locale,
@@ -22,10 +53,10 @@ const Menu = ({ lang, categories }: IProps) => {
   }, [categories]);
 
   return (
-    <LayoutWithCart>
-      <div className="container">
+    <LayoutWithCart style={{ backgroundImage: 'linear-gradient(rgba(70, 15, 48, 0.9), #000)', height: '100vh' }}>
+      <MainContainer>
         {categories.map((category: CategoryData, i: number) => (
-          <h3 key={i}>
+          <CategoryTitle key={i}>
             <Link
               href={{
                 pathname: "/[lang]/catalog/[slug]",
@@ -34,9 +65,9 @@ const Menu = ({ lang, categories }: IProps) => {
             >
               <a>{category.name}</a>
             </Link>
-          </h3>
+          </CategoryTitle>
         ))}
-      </div>
+      </MainContainer>
     </LayoutWithCart>
   );
 };
