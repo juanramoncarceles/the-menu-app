@@ -1,4 +1,6 @@
 import { useContext, useState } from "react";
+import Image from 'next/image';
+
 import { DispatchContext, StateContext } from "../contexts/AppContext";
 import { ActionTypes } from "../types/enums";
 import { IconButton } from "./Buttons";
@@ -44,7 +46,7 @@ const Root = styled.div<RootProps>`
   }
 `;
 
-const Img = styled.img`
+const Img = styled(Image)`
   width: 100%;
   margin-bottom: -${radius}px;
   border-radius: ${radius}px ${radius}px 0 0;
@@ -110,12 +112,15 @@ const Item = ({
 
   return (
     <Root data-id={id} active={amount > 0}>
-      <Img
+      <Img // TODO mark the two or three first images as priority={true}?
         src={
           imageurl
             ? process.env.backendServer + imageurl
             : "/food_img_placeholder.svg"
         }
+        width={340}
+        height={340}
+        unoptimized={true}
       />
       <Info>
         <ItemTitle>{title}</ItemTitle>
