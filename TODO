@@ -22,6 +22,7 @@ CHANGES:
     Inside the reducer this array would be sorted each time a new item would be stored, and also children arrays removed if removing all items of a category.
     
 FEATURES:
+  ☐ Add to the <head> the meta hreflang elements for the versions in all the languages.
   ☐ Get the name of the restaurant from the back-end to use it in index.tsx and in the <title> of the pages.
   ☐ In index.tsx get the background image from the back-end at build time with getStaticProps().
   ☐ Add and check accessibility.
