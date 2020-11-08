@@ -8,23 +8,34 @@ import { ActionTypes } from "../../types/enums";
 import { locales } from "../../translations/config";
 import { Locale } from "../../translations/types";
 import { DispatchContext } from "../../contexts/AppContext";
-import LayoutWithCart from "../../components/layouts/LayoutWithCart";
+import CustomLayout from "../../components/layouts/CustomLayout";
+
+const StyledBackground = styled.div`
+  background-color: ${({ theme }) => theme.textColor};
+  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.85)),
+    url("/dishes_pexels_valeria_boltneva.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
 
 const MainContainer = styled.main`
-  height: calc(100vh - 60px); // TODO Set the 60 as a variable with the cart height to use at build time.
+  height: calc(
+    100vh - 60px
+  ); // TODO Set the 60 as a variable with the cart height to use at build time.
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
   padding: 1rem;
   // TODO Only when cart is open... set in context a value to know when cart is open.
-  scrollbar-color: rgba(0,0,0,0) rgba(0,0,0,0);
+  scrollbar-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
 `;
 
 const CategoryTitle = styled.h2`
   padding: 3.5rem 0;
-  font-size: ${({theme}) => theme.typeScale.header2};
-  font-family: ${({theme}) => theme.headingFont};
+  font-size: ${({ theme }) => theme.typeScale.header2};
+  font-family: ${({ theme }) => theme.headingFont};
   text-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
 
   :first-child {
@@ -36,12 +47,12 @@ const CategoryTitle = styled.h2`
   }
 
   > a {
-    color: ${({theme}) => theme.textColorInverted};
+    color: ${({ theme }) => theme.textColorInverted};
   }
 `;
 
 interface IProps {
-  lang: Locale,
+  lang: Locale;
   categories: CategoryData[];
 }
 
@@ -53,7 +64,11 @@ const Menu = ({ lang, categories }: IProps) => {
   }, [categories]);
 
   return (
-    <LayoutWithCart style={{ backgroundImage: 'linear-gradient(rgba(70, 15, 48, 0.9), #000)', height: '100vh' }}>
+    <CustomLayout
+      style={StyledBackground}
+      showCart={true}
+      showLangPicker={true}
+    >
       <MainContainer>
         {categories.map((category: CategoryData, i: number) => (
           <CategoryTitle key={i}>
@@ -68,18 +83,18 @@ const Menu = ({ lang, categories }: IProps) => {
           </CategoryTitle>
         ))}
       </MainContainer>
-    </LayoutWithCart>
+    </CustomLayout>
   );
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = locales.map(locale => ({ params: { lang: locale }}));
+  const paths = locales.map((locale) => ({ params: { lang: locale } }));
 
   return {
     paths,
-    fallback: false
-  }
-}
+    fallback: false,
+  };
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   let categories: CategoryData[];

@@ -8,10 +8,10 @@ import { styled } from "../../../styles/themes";
 import { locales } from "../../../translations/config";
 import { DispatchContext, StateContext } from "../../../contexts/AppContext";
 import Item from "../../../components/Item";
-import LayoutWithCart from "../../../components/layouts/LayoutWithCart";
+import CustomLayout from "../../../components/layouts/CustomLayout";
 
 interface IProps {
-  lang: string,
+  lang: string;
   items: ItemData[];
   settings: AppSettings;
 }
@@ -33,15 +33,15 @@ const CatalogTitle = styled.div<CatalogTitleProps>`
   z-index: 10;
   top: 0;
   text-align: center;
-  padding-top: ${({small}) => small ? '0.6rem' : '1.4rem'};
+  padding-top: ${({ small }) => (small ? "0.6rem" : "1.4rem")};
   padding-bottom: 2rem;
-  background-image: linear-gradient(#fff, rgba(255,255,255,0));
+  background-image: linear-gradient(#fff, rgba(255, 255, 255, 0));
   transition: padding 1s;
 
   & > h3 {
-    font-size: ${({theme}) => theme.typeScale.header1};
+    font-size: ${({ theme }) => theme.typeScale.header1};
     transform-origin: top;
-    transform: ${({small}) => small ? 'scale(0.7)' : 'scale(1)'};
+    transform: ${({ small }) => (small ? "scale(0.7)" : "scale(1)")};
     transition: transform 1s;
   }
 `;
@@ -66,11 +66,11 @@ const Catalog = ({ lang, items, settings }: IProps) => {
   useEffect(() => {
     dispatch({ type: ActionTypes.StoreItems, payload: [items, settings] });
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return function cleanup() {
-      window.removeEventListener('scroll', handleScroll);
-    }
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [items]);
 
   const handleScroll = () => {
@@ -82,7 +82,7 @@ const Catalog = ({ lang, items, settings }: IProps) => {
   };
 
   return (
-    <LayoutWithCart>
+    <CustomLayout showCart={true} showLangPicker={true}>
       <BackLink>
         <Link href={`/${lang}/menu`}>
           <a>Back to menu</a>
@@ -109,7 +109,7 @@ const Catalog = ({ lang, items, settings }: IProps) => {
           );
         })}
       </ItemsContainer>
-    </LayoutWithCart>
+    </CustomLayout>
   );
 };
 
@@ -118,17 +118,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`${process.env.backendServer}/categories`);
   const categories: CategoryData[] = await res.json();
 
-  const paths = locales.map(lang => {
-    return categories.map(category => {
-      return { params: { lang, slug: category.slug } };
-    });
-  }).flat();
+  const paths = locales
+    .map((lang) => {
+      return categories.map((category) => {
+        return { params: { lang, slug: category.slug } };
+      });
+    })
+    .flat();
 
   return {
     paths,
-    fallback: false
-  }
-}
+    fallback: false,
+  };
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   let items: ItemData[];
