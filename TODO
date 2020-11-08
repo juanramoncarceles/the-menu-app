@@ -1,5 +1,4 @@
 BUGS:
-  ☐ Remove lang picker from the index page.
   ☐ Add tests for the language change logic.
   ☐ Save 'settings' in AppContext also from the 'menu' page.
     Implementation would be similar to the 'catalog' page.
@@ -20,6 +19,7 @@ CHANGES:
   ☐ Store orderItems already sorted in context instead than sorting them each time in createOrderTableJSX() of Cart.tsx.
     They could be stored in a nested array with the first item as the id of the category and the second an array of the items in that category.
     Inside the reducer this array would be sorted each time a new item would be stored, and also children arrays removed if removing all items of a category.
+  ☐ Use the ECMAScript internationalization API --> Intl for the number formatting and other things.
     
 FEATURES:
   ☐ Add to the <head> the meta hreflang elements for the versions in all the languages.
@@ -36,6 +36,7 @@ FEATURES:
     Similar to the WooCommerce cart.
 
 DONE:
+  ✔ Remove lang picker from the index page. @done(20-11-08 11:12)
   ✔ Cart items categories should appear in a fixed order according to the menu page. @done(20-10-15 21:14)
   ✔ Rename action "Store" to "StoreItems" in reducer. @done(20-10-03 16:18)
   ✔ Cart total items should be the total amount of items, not the total types of items. @low @done(20-10-02 21:44)
