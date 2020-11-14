@@ -22,7 +22,7 @@ interface IProps {
   showLangPicker?: boolean;
 }
 
-const LayoutWithCart = ({
+const CustomLayout = ({
   children,
   style: Style = DefaultBg,
   showCart = false,
@@ -39,4 +39,4 @@ const LayoutWithCart = ({
   );
 };
 
-export default LayoutWithCart;
+export default CustomLayout;
