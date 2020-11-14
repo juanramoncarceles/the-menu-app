@@ -15,6 +15,7 @@ export const defaultTheme = {
   formElementBackground: primary[500],
   textOnFormElementBackground: neutral[500],
   secondaryNeutralColor: neutral[200],
+  backgroundColor: neutral[100],
   headingFont: font.secondary,
   bodyFont: font.primary,
   typeScale,
@@ -27,8 +28,8 @@ export const defaultTheme = {
     warningColorActive: warning[300],
     errorColor: error[100],
     errorColorHover: error[200],
-    errorColorActive: error[300]
-  }
+    errorColorActive: error[300],
+  },
 };
 
 export const darkTheme: Theme = {
@@ -44,6 +45,7 @@ export const darkTheme: Theme = {
   formElementBackground: "#000",
   textOnFormElementBackground: "#000",
   secondaryNeutralColor: "#000",
+  backgroundColor: neutral[700],
   headingFont: "#000",
   bodyFont: "#000",
   typeScale,
@@ -56,9 +58,9 @@ export const darkTheme: Theme = {
     warningColorActive: "#000",
     errorColor: "#000",
     errorColorHover: "#000",
-    errorColorActive: "#000"
-  }
-}
+    errorColorActive: "#000",
+  },
+};
 
 export type Theme = typeof defaultTheme;
 

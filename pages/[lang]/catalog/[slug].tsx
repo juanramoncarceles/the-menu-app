@@ -16,6 +16,10 @@ interface IProps {
   settings: AppSettings;
 }
 
+const StyledBackground = styled.div`
+  background-color: ${({ theme }) => theme.backgroundColor};
+`;
+
 const BackLink = styled.div`
   position: fixed;
   left: 10px;
@@ -50,7 +54,9 @@ const ItemsContainer = styled.div`
   display: grid;
   justify-content: center;
   align-content: center;
-  margin: 7rem auto 5.5rem;
+  margin: 0 auto;
+  padding-top: 7rem;
+  padding-bottom: 5.5rem;
   max-width: 1000px;
   grid-template-columns: repeat(auto-fit, 250px);
   grid-gap: 20px;
@@ -82,7 +88,11 @@ const Catalog = ({ lang, items, settings }: IProps) => {
   };
 
   return (
-    <CustomLayout showCart={true} showLangPicker={true}>
+    <CustomLayout
+      style={StyledBackground}
+      showCart={true}
+      showLangPicker={true}
+    >
       <BackLink>
         <Link href={`/${lang}/menu`}>
           <a>Back to menu</a>
