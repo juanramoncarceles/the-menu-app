@@ -28,6 +28,7 @@ const Root = styled.div<RootProps>`
   display: flex;
   flex-direction: column;
   position: relative;
+  z-index: 1;
   border-radius: ${radius}px;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
 
