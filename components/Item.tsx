@@ -45,11 +45,14 @@ const Root = styled.div<RootProps>`
     opacity: ${({ active }) => (active ? 1 : 0)};
     transition: opacity 0.8s;
   }
+
+  > :first-child {
+    margin-bottom: -${radius}px;
+  }
 `;
 
 const Img = styled(Image)`
   width: 100%;
-  margin-bottom: -${radius}px;
   border-radius: ${radius}px ${radius}px 0 0;
 `;
 
@@ -59,6 +62,7 @@ const Info = styled.div`
   align-items: center;
   flex-grow: 1;
   padding: 0.5rem;
+  z-index: 1;
   text-align: center;
   border-radius: ${radius}px;
   background-color: #fff;
