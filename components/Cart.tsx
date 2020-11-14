@@ -35,9 +35,9 @@ const DockedView = styled.div<{ open: boolean }>`
   right: 0px;
   left: 0px;
   bottom: 0px;
-  color: ${({theme}) => theme.textColorInverted};
+  color: ${({ theme }) => theme.textColorInverted};
   border-top: 5px solid ${({ theme }) => theme.primaryBorderColor};
-  background-color: ${({theme}) => theme.primaryColor};
+  background-color: ${({ theme }) => theme.primaryColor};
 
   ${({ open }) =>
     open
@@ -60,8 +60,8 @@ const OpenCartBtnContainer = styled.div`
 const OpenCartBtn = styled(BaseTextButton)`
   position: absolute;
   transform: translateY(-50%);
-  font-size: ${({theme}) => theme.typeScale.header4};
-  color: ${({theme}) => theme.textColorInverted};
+  font-size: ${({ theme }) => theme.typeScale.header4};
+  color: ${({ theme }) => theme.textColorInverted};
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
@@ -194,8 +194,11 @@ const Cart = () => {
       }
     });
     // Sort the contents according to how categories are stored.
-    const sortedOrderContents = Object.entries(orderContents)
-      .sort((a, b) => categoriesData.findIndex(c => c.id === a[0]) - categoriesData.findIndex(c => c.id === b[0]));
+    const sortedOrderContents = Object.entries(orderContents).sort(
+      (a, b) =>
+        categoriesData.findIndex((c) => c.id === a[0]) -
+        categoriesData.findIndex((c) => c.id === b[0])
+    );
     // Create the array of JSX elements that will be returned.
     const orderJSX: JSX.Element[] = [];
     for (const [sectionId, items] of sortedOrderContents) {
@@ -244,18 +247,22 @@ const Cart = () => {
               </tr>
             </tfoot>
           </table>
-        <OrderButton>{t("order")}</OrderButton>
+          <OrderButton>{t("order")}</OrderButton>
         </OrderContent>
       </FullView>
       <DockedView open={isOpen}>
         <div>{orderItems.reduce((acc, curr) => acc + curr.qty, 0)} items</div>
         <OpenCartBtnContainer>
-          <OpenCartBtn
-            onClick={() => setIsOpen(!isOpen)}
-            data-testid="open-order-btn"
-          >
-            {t("viewOrder")}
-          </OpenCartBtn>
+          {orderItems.length > 0 ? (
+            <OpenCartBtn
+              onClick={() => setIsOpen(!isOpen)}
+              data-testid="open-order-btn"
+            >
+              {t("viewOrder")}
+            </OpenCartBtn>
+          ) : (
+            ""
+          )}
         </OpenCartBtnContainer>
         <div>{formatPrice(totalPrice)}</div>
       </DockedView>

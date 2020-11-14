@@ -14,7 +14,6 @@ BUGS:
   ☐ Add margin bottom on the items container to avoid last items to remain behaind the cart component at the bottom of the viewport.
 
 CHANGES:
-  ☐ While there is nothing in the cart hide the button "View order" so it cannot be opened.
   ☐ Make the food item svg image placeholder be inline? @low 
   ☐ Store orderItems already sorted in context instead than sorting them each time in createOrderTableJSX() of Cart.tsx.
     They could be stored in a nested array with the first item as the id of the category and the second an array of the items in that category.
@@ -36,6 +35,7 @@ FEATURES:
     Similar to the WooCommerce cart.
 
 DONE:
+  ✔ While there is nothing in the cart hide the button "View order" so it cannot be opened. @done(20-11-14 19:12)
   ✔ Remove lang picker from the index page. @done(20-11-08 11:12)
   ✔ Cart items categories should appear in a fixed order according to the menu page. @done(20-10-15 21:14)
   ✔ Rename action "Store" to "StoreItems" in reducer. @done(20-10-03 16:18)
