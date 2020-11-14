@@ -46,7 +46,7 @@ const LanguagesLinksContainer = styled.div`
 
 const Home = () => {
   return (
-    <CustomLayout style={StyledBackground}>
+    <CustomLayout bgStyle={StyledBackground}>
       <MainContainer>
         <Heading>
           tasty

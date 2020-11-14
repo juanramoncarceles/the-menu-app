@@ -16,7 +16,7 @@ const StyledBase = styled.div`
 
 interface IProps {
   children?: ReactNode;
-  style?: StyledComponent<"div", Theme>;
+  bgStyle?: StyledComponent<"div", Theme>;
   showCart?: boolean;
   showThemeSwitcher?: boolean;
   showLangPicker?: boolean;
@@ -24,7 +24,7 @@ interface IProps {
 
 const CustomLayout = ({
   children,
-  style: Style = DefaultBg,
+  bgStyle: Style = DefaultBg,
   showCart = false,
   showThemeSwitcher = false,
   showLangPicker = false,

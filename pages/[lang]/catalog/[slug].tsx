@@ -89,7 +89,7 @@ const Catalog = ({ lang, items, settings }: IProps) => {
 
   return (
     <CustomLayout
-      style={StyledBackground}
+      bgStyle={StyledBackground}
       showCart={true}
       showLangPicker={true}
     >
