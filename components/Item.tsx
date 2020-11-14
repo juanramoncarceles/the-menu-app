@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import Image from 'next/image';
+import Image from "next/image";
 
 import { DispatchContext, StateContext } from "../contexts/AppContext";
 import { ActionTypes } from "../types/enums";
@@ -41,7 +41,7 @@ const Root = styled.div<RootProps>`
     z-index: -1;
     left: -${activeBorderOffset}px;
     top: -${activeBorderOffset}px;
-    opacity: ${({ active }) => active ? 1 : 0};
+    opacity: ${({ active }) => (active ? 1 : 0)};
     transition: opacity 0.8s;
   }
 `;
@@ -65,7 +65,7 @@ const Info = styled.div`
 
 const ItemTitle = styled.h4`
   margin-bottom: 0.8rem;
-  font-size: ${({theme}) => theme.typeScale.header5};
+  font-size: ${({ theme }) => theme.typeScale.header5};
 `;
 
 const Description = styled.p`
@@ -82,7 +82,7 @@ const PriceAndAmount = styled.div`
 
 const Price = styled.span`
   padding: 0 8px;
-  font-size: ${({theme}) => theme.typeScale.header5};
+  font-size: ${({ theme }) => theme.typeScale.header5};
 `;
 
 const CounterBlock = styled.span`
@@ -95,7 +95,7 @@ const Amount = styled.span`
   width: 1.5rem;
   margin-right: 10px;
   margin-left: 10px;
-  font-size: ${({theme}) => theme.typeScale.header5};
+  font-size: ${({ theme }) => theme.typeScale.header5};
 `;
 
 const Item = ({
