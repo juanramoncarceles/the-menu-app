@@ -53,7 +53,9 @@ const LanguageSelect = () => {
 
   return (
     <Root>
-      <label htmlFor="lang">LANG</label>
+      <label htmlFor="lang" className="visually-hidden">
+        LANG
+      </label>
       <Select
         name="lang"
         id="lang"
