@@ -27,6 +27,16 @@ export const GlobalStyle = createGlobalStyle`
     font-family: ${font.primary};
   }
 
+  a,
+  button,
+  select,
+  input,
+  textarea {
+    :focus {
+      outline: none;
+    }
+  }
+
   .visually-hidden {
     border: 0;
     clip: rect(0 0 0 0);
