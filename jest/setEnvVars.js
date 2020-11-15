@@ -1,4 +1,5 @@
-// Temporary due to a problem with Next's Image component. See: https://github.com/vercel/next.js/issues/18415
+// From version 10.0.2 this may not be necessary if the values are the default ones like below,
+// however it will be if the values are custom. See: https://github.com/vercel/next.js/pull/19107
 process.env = {
   ...process.env,
   __NEXT_IMAGE_OPTS: {
