@@ -7,6 +7,7 @@ const strings: Strings = {
     yourOrder: "Your order",
     backToMenu: "Back to menu",
     total: "Total",
+    language: "Language",
   },
   es: {
     order: "Pedir",
@@ -14,7 +15,8 @@ const strings: Strings = {
     yourOrder: "Su pedido",
     backToMenu: "Volver al menú",
     total: "Total",
+    language: "Idioma",
   },
-}
+};
 
 export default strings;

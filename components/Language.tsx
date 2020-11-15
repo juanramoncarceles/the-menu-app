@@ -6,6 +6,7 @@ import { ActionTypes } from "../types/enums";
 import { Locale, isLocale } from "../translations/types";
 import { DispatchContext } from "../contexts/AppContext";
 import { styled } from "../styles";
+import useTranslation from "../hooks/useTranslation";
 
 const Root = styled.div`
   position: absolute;
@@ -36,6 +37,7 @@ const Select = styled.select`
 
 const LanguageSelect = () => {
   const dispatch = useContext(DispatchContext);
+  const { t } = useTranslation();
 
   const router = useRouter();
 
@@ -54,7 +56,7 @@ const LanguageSelect = () => {
   return (
     <Root>
       <label htmlFor="lang" className="visually-hidden">
-        LANG
+        {t("language")}
       </label>
       <Select
         name="lang"
