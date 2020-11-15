@@ -65,7 +65,7 @@ const Menu = ({ lang, categories }: IProps) => {
 
   return (
     <CustomLayout
-      style={StyledBackground}
+      bgStyle={StyledBackground}
       showCart={true}
       showLangPicker={true}
     >
