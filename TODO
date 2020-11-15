@@ -7,7 +7,6 @@ BUGS:
     Thay way the required category data would be always avaialble when opening the cart. Since only the 'id' and 'name' are necessary it would work.
   ☐ Currently if 'settings' change they are not updated because in the catalog's 'useEffect' there is no 'settings' dependency.
     Watch them or separate in two different dispatch actions to control them better in context reducer? An action like 'StoreSettings'.
-  ☐ Remove the focus outline of Chrome on buttons.
   ☐ Import SVGs as React components with babel-plugin-inline-react-svg
     https://medium.com/anna-coding/how-to-import-svg-in-next-js-with-typescript-88ebff26ce17
     https://medium.com/wesionary-team/rendering-svg-image-in-next-js-with-next-image-and-babel-plugin-inline-react-svg-fc7fae588ac3
@@ -21,9 +20,10 @@ CHANGES:
   ☐ Use the ECMAScript internationalization API --> Intl for the number formatting and other things.
     
 FEATURES:
+  ☐ Use Helmet to set all the SEO data including the page <title> which now is hardcoded.
   ☐ Add to the <head> the meta hreflang elements for the versions in all the languages.
   ☐ Get the name of the restaurant from the back-end to use it in index.tsx and in the <title> of the pages.
-  ☐ Add and check accessibility.
+  ☐ Add and check accessibility. For example a :focus state for all elements that require it.
   ☐ Add subcategories, important for example in the case of drinks.
   ☐ When adding an item to the cart and the total price increases a number transition could be added.
   ☐ Store order data in localStorage as well so it is persistent.
