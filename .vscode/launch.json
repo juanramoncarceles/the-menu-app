@@ -2,6 +2,18 @@
   "version": "0.2.0",
   "configurations": [
     {
+      // First run "npm run debug",
+      // then start this debug process,
+      // open Chrome --> chrome://inspect --> Remote target --> inspect
+      // place the debugger; keyword in the code
+      // and open the app in a Chrome tab
+      "name": "Launch Program",
+      "type": "node",
+      "request": "attach",
+      "skipFiles": ["<node_internals>/**"],
+      "port": 9229
+    },
+    {
       "name": "Debug Jest Tests",
       "type": "node",
       "request": "launch",
