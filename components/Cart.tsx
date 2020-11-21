@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { toDataURL } from "qrcode";
 
 import { StateContext } from "../contexts/AppContext";
 import type { OrderItem, CategoryData } from "../types";
@@ -147,13 +148,13 @@ const QRContainer = styled.div`
   background: #bdbdbded;
 `;
 
-const QRCanvas = styled.canvas`
+const QRImg = styled.img`
   display: block;
   height: 300px;
   width: 300px;
   max-width: 100%;
   margin: 2rem auto;
-  background: pink;
+  background-color: #fff;
 `;
 
 const QRExplanation = styled.p`
@@ -172,6 +173,7 @@ const CloseQRButton = styled(SecondaryButton)`
 const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isQROpen, setIsQROpen] = useState(false);
+  const [tableQRCode, setTableQRCode] = useState("");
   const { orderItems, categoriesData, formatPrice } = useContext(StateContext);
   const { t } = useTranslation();
 
@@ -248,6 +250,14 @@ const Cart = () => {
     return orderJSX;
   };
 
+  /**
+   * Generates a dataURL with the QR image.
+   * It is set as async because it is called when opening the cart so it doesn't block.
+   * @param stringData Text to make the code from.
+   */
+  const generateQRDataURL = async (stringData: string) =>
+    toDataURL(stringData, { width: 300 }).then((data) => setTableQRCode(data));
+
   return (
     <Root open={isOpen}>
       <FullView open={isOpen}>
@@ -289,9 +299,9 @@ const Cart = () => {
         <QRContainer>
           <div>
             <QRExplanation>
-              Let a responsible scan this code to take your order
+              Ask a waiter to scan this code with your order
             </QRExplanation>
-            <QRCanvas />
+            <QRImg src={tableQRCode} />
             <CloseQRButton onClick={() => setIsQROpen(!isQROpen)}>
               Close
             </CloseQRButton>
@@ -305,7 +315,10 @@ const Cart = () => {
         <OpenCartBtnContainer>
           {orderItems.length > 0 ? (
             <OpenCartBtn
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => {
+                setIsOpen(!isOpen);
+                generateQRDataURL("this-will-be-the-table-uuid");
+              }}
               data-testid="open-order-btn"
             >
               {t("viewOrder")}
