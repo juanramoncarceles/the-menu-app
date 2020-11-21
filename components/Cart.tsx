@@ -298,12 +298,10 @@ const Cart = () => {
       {isQROpen ? (
         <QRContainer>
           <div>
-            <QRExplanation>
-              Ask a waiter to scan this code with your order
-            </QRExplanation>
+            <QRExplanation>{t("askWaiterToScan")}</QRExplanation>
             <QRImg src={tableQRCode} />
             <CloseQRButton onClick={() => setIsQROpen(!isQROpen)}>
-              Close
+              {t("close")}
             </CloseQRButton>
           </div>
         </QRContainer>
