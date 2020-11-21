@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { StateContext } from "../contexts/AppContext";
 import type { OrderItem, CategoryData } from "../types";
 import { styled } from "../styles";
-import { PrimaryButton, BaseTextButton } from "./Buttons";
+import { PrimaryButton, SecondaryButton, BaseTextButton } from "./Buttons";
 import useTranslation from "../hooks/useTranslation";
 
 const dockedHeight = 60;
@@ -137,8 +137,41 @@ const OrderTotalPrice = styled.td`
   font-weight: bold;
 `;
 
+const QRContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: #bdbdbded;
+`;
+
+const QRCanvas = styled.canvas`
+  display: block;
+  height: 300px;
+  width: 300px;
+  max-width: 100%;
+  margin: 2rem auto;
+  background: pink;
+`;
+
+const QRExplanation = styled.p`
+  max-width: 400px;
+  margin-right: 0.8rem;
+  margin-left: 0.8rem;
+  font-size: ${({ theme }) => theme.typeScale.header4};
+  text-align: center;
+`;
+
+const CloseQRButton = styled(SecondaryButton)`
+  display: block;
+  margin: 0 auto;
+`;
+
 const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isQROpen, setIsQROpen] = useState(false);
   const { orderItems, categoriesData, formatPrice } = useContext(StateContext);
   const { t } = useTranslation();
 
@@ -247,9 +280,26 @@ const Cart = () => {
               </tr>
             </tfoot>
           </table>
-          <OrderButton>{t("order")}</OrderButton>
+          <OrderButton onClick={() => setIsQROpen(!isQROpen)}>
+            {t("order")}
+          </OrderButton>
         </OrderContent>
       </FullView>
+      {isQROpen ? (
+        <QRContainer>
+          <div>
+            <QRExplanation>
+              Let a responsible scan this code to take your order
+            </QRExplanation>
+            <QRCanvas />
+            <CloseQRButton onClick={() => setIsQROpen(!isQROpen)}>
+              Close
+            </CloseQRButton>
+          </div>
+        </QRContainer>
+      ) : (
+        ""
+      )}
       <DockedView open={isOpen}>
         <div>{orderItems.reduce((acc, curr) => acc + curr.qty, 0)} items</div>
         <OpenCartBtnContainer>
