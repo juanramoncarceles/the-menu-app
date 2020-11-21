@@ -1,9 +1,10 @@
 import { useState, useContext } from "react";
+import { toDataURL } from "qrcode";
 
 import { StateContext } from "../contexts/AppContext";
 import type { OrderItem, CategoryData } from "../types";
 import { styled } from "../styles";
-import { PrimaryButton, BaseTextButton } from "./Buttons";
+import { PrimaryButton, SecondaryButton, BaseTextButton } from "./Buttons";
 import useTranslation from "../hooks/useTranslation";
 
 const dockedHeight = 60;
@@ -137,8 +138,42 @@ const OrderTotalPrice = styled.td`
   font-weight: bold;
 `;
 
+const QRContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: #bdbdbded;
+`;
+
+const QRImg = styled.img`
+  display: block;
+  height: 300px;
+  width: 300px;
+  max-width: 100%;
+  margin: 2rem auto;
+  background-color: #fff;
+`;
+
+const QRExplanation = styled.p`
+  max-width: 400px;
+  margin-right: 0.8rem;
+  margin-left: 0.8rem;
+  font-size: ${({ theme }) => theme.typeScale.header4};
+  text-align: center;
+`;
+
+const CloseQRButton = styled(SecondaryButton)`
+  display: block;
+  margin: 0 auto;
+`;
+
 const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isQROpen, setIsQROpen] = useState(false);
+  const [tableQRCode, setTableQRCode] = useState("");
   const { orderItems, categoriesData, formatPrice } = useContext(StateContext);
   const { t } = useTranslation();
 
@@ -215,6 +250,14 @@ const Cart = () => {
     return orderJSX;
   };
 
+  /**
+   * Generates a dataURL with the QR image.
+   * It is set as async because it is called when opening the cart so it doesn't block.
+   * @param stringData Text to make the code from.
+   */
+  const generateQRDataURL = async (stringData: string) =>
+    toDataURL(stringData, { width: 300 }).then((data) => setTableQRCode(data));
+
   return (
     <Root open={isOpen}>
       <FullView open={isOpen}>
@@ -247,15 +290,33 @@ const Cart = () => {
               </tr>
             </tfoot>
           </table>
-          <OrderButton>{t("order")}</OrderButton>
+          <OrderButton onClick={() => setIsQROpen(!isQROpen)}>
+            {t("order")}
+          </OrderButton>
         </OrderContent>
       </FullView>
+      {isQROpen ? (
+        <QRContainer>
+          <div>
+            <QRExplanation>{t("askWaiterToScan")}</QRExplanation>
+            <QRImg src={tableQRCode} />
+            <CloseQRButton onClick={() => setIsQROpen(!isQROpen)}>
+              {t("close")}
+            </CloseQRButton>
+          </div>
+        </QRContainer>
+      ) : (
+        ""
+      )}
       <DockedView open={isOpen}>
         <div>{orderItems.reduce((acc, curr) => acc + curr.qty, 0)} items</div>
         <OpenCartBtnContainer>
           {orderItems.length > 0 ? (
             <OpenCartBtn
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => {
+                setIsOpen(!isOpen);
+                generateQRDataURL("this-will-be-the-table-uuid");
+              }}
               data-testid="open-order-btn"
             >
               {t("viewOrder")}
